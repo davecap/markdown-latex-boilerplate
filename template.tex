@@ -1,0 +1,58 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage[mathletters]{ucs}
+\usepackage[utf8x]{inputenc}
+
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\headsep = 30pt
+\pagenumbering{arabic}
+\lhead{\itshape Your Name}
+\chead{}
+\rhead{\itshape{\nouppercase{\leftmark}}}
+\lfoot{}
+\cfoot{}
+\rfoot{\thepage}
+\usepackage{listings}
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\usepackage{fancyvrb}
+\usepackage{enumerate}
+\usepackage{array}
+% This is needed because raggedright in table elements redefines \\:
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\let\PBS=\PreserveBackslash
+\usepackage[normalem]{ulem}
+\newcommand{\textsubscr}[1]{\ensuremath{_{\scriptsize\textrm{#1}}}}
+\usepackage[breaklinks=true,linktocpage,colorlinks]{hyperref}
+
+\usepackage{url}
+\usepackage{graphicx}
+
+$if(numbersections)$
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+\VerbatimFootnotes % allows verbatim text in footnotes
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+\title{The Title}
+\author{Your Name}
+$if(date)$
+\date{$date$}
+$endif$
+
+\begin{document}
+\maketitle
+\newpage
+
+\tableofcontents
+
+$body$
+
+\end{document}

@@ -1,0 +1,3 @@
+[submodule "csl"]
+	path = csl
+	url = git@github.com:citation-style-language/styles
