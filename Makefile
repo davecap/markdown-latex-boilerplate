@@ -2,6 +2,7 @@ SECTIONS = example.md references.md
 
 REFS = references.bib
 TEMPLATE = template.tex
+#TEMPLATE = ut-thesis.tex
 CSL = elsevier-with-titles
 
 .PHONY: all clean html pdf epub embed

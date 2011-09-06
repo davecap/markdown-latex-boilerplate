@@ -1,0 +1,120 @@
+\documentclass{ut-thesis}
+
+\usepackage{amsmath}
+\usepackage[mathletters]{ucs}
+\usepackage[utf8x]{inputenc}
+
+\usepackage{array}
+\usepackage[normalem]{ulem}
+\newcommand{\textsubscr}[1]{\ensuremath{_{\scriptsize\textrm{#1}}}}
+\usepackage[breaklinks=true,linktocpage,colorlinks]{hyperref}
+
+\usepackage{url}
+\usepackage{graphicx}
+
+$if(numbersections)$
+$else$
+\setcounter{section}{1}
+\setcounter{secnumdepth}{0}
+\setcounter{tocdepth}{2}
+$endif$
+%\VerbatimFootnotes % allows verbatim text in footnotes
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+$if(date)$
+\date{$date$}
+$endif$
+
+\degree{PhD}
+\department{Stuff}
+\gradyear{2021}
+\author{Your Name}
+\title{The Grand Unified Theory of Stuff}
+
+\begin{document}
+
+%% ***   NOTE   ***
+%% You should put all of your `\newcommand', `\newenvironment', and
+%% `\newtheorem's (in other words, all the global definitions that
+%% you will need throughout your thesis) in a separate file and use
+%% "\input{filename}" to input it here.
+
+%% This sets the page style and numbering for preliminary sections.
+\begin{preliminary}
+
+%% This generates the title page from the information given above.
+\maketitle
+
+%% There should be NOTHING between the title page and abstract.
+
+%% This generates the abstract page, with the line spacing adjusted
+%% according to SGS guidelines.
+\begin{abstract}
+%% ***   Put your Abstract here.   ***
+%% (At most 150 words for M.Sc. or 350 words for Ph.D.)
+This is the abstract.
+\end{abstract}
+
+%% Anything placed between the abstract and table of contents will
+%% appear on a separate page since the abstract ends with \newpage
+%% and the table of contents starts with \clearpage.
+
+%% This generates a "dedication" section, if needed.
+%% (uncomment to have it appear in the document)
+begin{dedication}
+To \emph{academia}.
+\end{dedication}
+
+%% The `dedication' and `acknowledgements' sections do not create new
+%% pages so if you want the two sections to appear on separate pages,
+%% you should put an explicit \newpage between them.
+
+%% This generates an "acknowledgements" section, if needed.
+%% (uncomment to have it appear in the document)
+\begin{acknowledgements}
+Thank you, the reader.
+\end{acknowledgements}
+
+%% This generates the Table of Contents (on a separate page).
+\tableofcontents
+
+%% This generates the List of Tables (on a separate page), if needed.
+%% (uncomment to have it appear in the document)
+\listoftables
+
+%% This generates the List of Figures (on a separate page), if needed.
+%% (uncomment to have it appear in the document)
+\listoffigures
+
+%% End of the preliminary sections: reset page style and numbering.
+\end{preliminary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Put your Chapters here; the easiest way to do this is to keep   %%
+%%  each chapter in a separate file and `\include' all the files    %%
+%%  right here.  Note that each chapter file should start with the  %%
+%%  line "\chapter{ChapterName}".  Note that using `\include'       %%
+%%  instead of `\input' makes each chapter start on a new page.     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ***   Include chapter files here.   ***
+$body$
+
+%% This adds a line for the Bibliography in the Table of Contents.
+%\addcontentsline{toc}{chapter}{Bibliography}
+%% ***   Set the bibliography style.   ***
+%% (change according to your preference)
+% \bibliographystyle{plain}
+%% ***   Set the bibliography file.   ***
+%% ("thesis.bib" by default; change if needed)
+% \bibliography{thesis}
+
+%% ***   NOTE   ***
+%% If you don't use bibliography files, comment out the previous line
+%% and use \begin{thebibliography}...\end{thebibliography}.  (In that
+%% case, you should probably put the bibliography in a separate file
+%% and `\include' or `\input' it here).
+
+\end{document}
