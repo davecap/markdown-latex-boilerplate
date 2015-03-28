@@ -1,0 +1,4 @@
+SECTIONS=sections.txt
+REFERENCES=references.bib
+TEMPLATE=template.tex
+CSL=outline.txt
