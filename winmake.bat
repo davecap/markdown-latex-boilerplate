@@ -9,6 +9,8 @@ for /f %%i in (config.txt) do (
     for /f "tokens=1,2 delims==" %%a IN ("%%i") DO SET "%%a=%%b"
 )
 
+set /p SECTIONS=<%SECTIONS% 
+
 rmdir build /S /q
 mkdir build
 
