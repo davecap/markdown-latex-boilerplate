@@ -89,6 +89,10 @@ Falls back to pdf behaviour
 
 ## Windows
 
+	winmake clean
+
+Removes the build folder
+
 	winmake pdf
 	
 Builds a pdf file to ./build/ folder. Requires LaTeX.

@@ -11,8 +11,18 @@ for /f %%i in (config.txt) do (
 
 set /p SECTIONS=<%SECTIONS% 
 
+IF "%COMMAND%"=="clean" goto cleanOnly
+goto pre
+
+:cleanOnly
+ECHO remove build folder
+rmdir build /S /q
+goto exit
+
+:pre
 rmdir build /S /q
 mkdir build
+
 
 IF "%COMMAND%"=="pdf" goto pdf
 IF "%COMMAND%"=="epub" goto epub
