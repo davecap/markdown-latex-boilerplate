@@ -48,8 +48,6 @@ Linux makefile is hardcoded in it's makefile )
 	
 ## Linux
 
----
-
 	make pre
 
 Create build folder
