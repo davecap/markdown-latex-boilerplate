@@ -2,6 +2,7 @@ ECHO OFF
 ECHO Windows Makefile alternative for markdown-latex-boilerplate
 ECHO Command List: "winmake pdf","winmake epub","winmake html": default html
 
+REM 
 SET COMMAND=%1%
 ECHO "COMMAND: %COMMAND%"
 
@@ -24,8 +25,9 @@ goto exit
 rmdir build /S /q
 mkdir build
 
-
+REM Menu settings here
 IF "%COMMAND%"=="pdf" goto pdf
+IF "%COMMAND%"=="pdf-safemode" goto pdfsafemode
 IF "%COMMAND%"=="epub" goto epub
 IF "%COMMAND%"=="html" goto html
 
@@ -33,15 +35,21 @@ ECHO Default is HTML
 goto html
 
 :pdf
-markdown2pdf --toc -N --bibliography=%REFERENCES% -o ./build/example.pdf --csl=./csl/%CSL%.csl --template=%TEMPLATE% %SECTIONS%
+REM If something goes wrong as in "Undefined control sequence". It usually imply that there is something wrong with the latex template. Use safemode
+pandoc --toc -N --bibliography=%REFERENCES% -o ./build/%BUILDNAME%.pdf --csl=./csl/%CSL%.csl --template=%TEMPLATE% %SECTIONS%
+goto exit
+
+:pdfsafemode
+REM Same as pdf mode, but without the template.
+pandoc --toc -N --bibliography=%REFERENCES% -o ./build/%BUILDNAME%.pdf --csl=./csl/%CSL%.csl %SECTIONS%
 goto exit
 
 :epub
-pandoc -S -s --biblatex --toc -N --bibliography=%REFS% -o ./build/example.epub -t epub --normalize %SECTIONS%
+pandoc -S -s --biblatex --toc -N --bibliography=%REFS% -o ./build/%BUILDNAME%.epub -t epub --normalize %SECTIONS%
 goto exit
 
 :html
-pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=%REFERENCES% -o ./build/example.html -t html --normalize %SECTIONS%
+pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=%REFERENCES% -o ./build/%BUILDNAME%.html -t html --normalize %SECTIONS%
 goto exit
 
 :exit
