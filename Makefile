@@ -1,8 +1,22 @@
-include config.txt
 
+
+# Default Config Settings
+
+SECTIONS_FILEPATH=sections.txt
+BUILDNAME=example
+REFERENCES=references.bib
+TEMPLATE=template.tex
+# TEMPLATE=ut-thesis.tex
+CSL=elsevier-with-titles
+
+
+# Load in new config settings
+include config.txt
 cat := $(if $(filter $(OS),Windows_NT),type,cat)
 SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) )
 
+
+# Perform task
 .PHONY: all clean html pdf epub embed
 
 pre:

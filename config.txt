@@ -3,4 +3,4 @@ BUILDNAME=example
 REFERENCES=references.bib
 TEMPLATE=template.tex
 # TEMPLATE=ut-thesis.tex
-CSL=elsevier-with-titles
+CSL=../elsevier-with-titles
