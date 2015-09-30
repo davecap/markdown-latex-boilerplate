@@ -1,4 +1,6 @@
-SECTIONS=sections.txt
+SECTIONS_FILEPATH=sections.txt
+BUILDNAME=example
 REFERENCES=references.bib
 TEMPLATE=template.tex
-CSL=elsevier-with-titles
+# TEMPLATE=ut-thesis.tex
+CSL=../elsevier-with-titles
