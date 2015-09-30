@@ -11,7 +11,8 @@ ECHO  * https://github.com/mofosyne/markdown-latex-boilerplate
 ECHO  * https://github.com/davecap/markdown-latex-boilerplate
 ECHO.
 ECHO TIP: On first install, make sure /csl/ folder has https://github.com/citation-style-language/styles else pdf won't work.
-
+ECHO.
+ECHO.
 
 
 SET COMMAND=%1%
@@ -84,23 +85,28 @@ rmdir build /S /q
 goto exit
 
 :pdf
+ECHO ## PDF MODE
 REM If something goes wrong as in "Undefined control sequence". It usually imply that there is something wrong with the latex template. Use safemode
 pandoc --toc -N --bibliography=%REFERENCES% -o ./build/%BUILDNAME%.pdf %CSL_SET% --template=%TEMPLATE% %SECTIONS%
 goto exit
 
 :pdfsafemode
+ECHO ## PDF SAFEMODE
 REM Same as pdf mode, but without the template. Also removed CSL since people may forget to download a CSL sheet.
 pandoc --toc -N --bibliography=%REFERENCES% -o ./build/%BUILDNAME%.pdf %SECTIONS%
 goto exit
 
 :epub
+ECHO ## EPUB MODE
 pandoc -S -s --biblatex --toc -N --bibliography=%REFS% -o ./build/%BUILDNAME%.epub -t epub --normalize %SECTIONS%
 goto exit
 
 :html
+ECHO ## HTML MODE
 pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=%REFERENCES% -o ./build/%BUILDNAME%.html -t html --normalize %SECTIONS%
 goto exit
 
 :exit
+ECHO.
 ECHO All Done!
 PAUSE
