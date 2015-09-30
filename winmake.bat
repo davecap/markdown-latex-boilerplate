@@ -24,10 +24,14 @@ SET REFERENCES=references.bib
 SET TEMPLATE=template.tex
 SET CSL=elsevier-with-titles
 
+REM Set CR+LF as the newline https://en.wikipedia.org/wiki/Newline#Conversion_utilities
+TYPE config.txt | MORE /P > config.temp.txt
 REM Load config
-for /f %%i in (config.txt) do (
+for /f %%i in (config.temp.txt) do (
     for /f "tokens=1,2 delims==" %%a IN ("%%i") DO SET "%%a=%%b"
 )
+REM Clear the CR+LF working file
+DEL config.temp.txt
 
 REM Load sections
 set /p SECTIONS=<%SECTIONS_FILEPATH% 
