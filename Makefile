@@ -1,9 +1,7 @@
-SECTIONS = example.md references.md
+include config.txt
 
-REFS = references.bib
-TEMPLATE = template.tex
-#TEMPLATE = ut-thesis.tex
-CSL = elsevier-with-titles
+cat := $(if $(filter $(OS),Windows_NT),type,cat)
+SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) )
 
 .PHONY: all clean html pdf epub embed
 

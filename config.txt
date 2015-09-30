@@ -1,4 +1,5 @@
-SECTIONS=sections.txt
+SECTIONS_FILEPATH=sections.txt
 REFERENCES=references.bib
 TEMPLATE=template.tex
+#TEMPLATE = ut-thesis.tex
 CSL=elsevier-with-titles

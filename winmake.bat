@@ -9,7 +9,8 @@ for /f %%i in (config.txt) do (
     for /f "tokens=1,2 delims==" %%a IN ("%%i") DO SET "%%a=%%b"
 )
 
-set /p SECTIONS=<%SECTIONS% 
+ECHO Reading in files in section
+set /p SECTIONS=<%SECTIONS_FILEPATH% 
 
 IF "%COMMAND%"=="clean" goto cleanOnly
 goto pre
