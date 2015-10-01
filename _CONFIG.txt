@@ -1,4 +1,4 @@
-SECTIONS_FILEPATH=sections.txt
+SECTIONS_FILEPATH=_SECTIONS.txt
 BUILDNAME=example
 REFERENCES=references.bib
 TEMPLATE=template.tex

@@ -19,20 +19,20 @@ SET COMMAND=%1%
 
 
 REM Default config Here:
-SET SECTIONS_FILEPATH=sections.txt
+SET SECTIONS_FILEPATH=_SECTIONS.txt
 SET BUILDNAME=example
 SET REFERENCES=references.bib
 SET TEMPLATE=template.tex
 SET CSL=elsevier-with-titles
 
 REM Set CR+LF as the newline https://en.wikipedia.org/wiki/Newline#Conversion_utilities
-TYPE config.txt | MORE /P > config.temp.txt
+TYPE _CONFIG.txt | MORE /P > _CONFIG.temp.txt
 REM Load config
-for /f %%i in (config.temp.txt) do (
+for /f %%i in (_CONFIG.temp.txt) do (
     for /f "tokens=1,2 delims==" %%a IN ("%%i") DO SET "%%a=%%b"
 )
 REM Clear the CR+LF working file
-DEL config.temp.txt
+DEL _CONFIG.temp.txt
 
 REM Remove all newlines in SECTIONS
 setlocal enabledelayedexpansion

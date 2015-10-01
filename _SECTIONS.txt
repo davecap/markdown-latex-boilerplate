@@ -1,0 +1,3 @@
+./pages/book.yaml
+./pages/example.md
+./pages/references.md

@@ -1,2 +1,0 @@
-example.md
-references.md

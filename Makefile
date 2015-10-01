@@ -2,7 +2,7 @@
 
 # Default Config Settings
 
-SECTIONS_FILEPATH=sections.txt
+SECTIONS_FILEPATH=_SECTIONS.txt
 BUILDNAME=example
 REFERENCES=references.bib
 TEMPLATE=template.tex
@@ -11,7 +11,7 @@ CSL=elsevier-with-titles
 
 
 # Load in new config settings
-include config.txt
+include _CONFIG.txt
 cat := $(if $(filter $(OS),Windows_NT),type,cat)
 SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) | tr '\n' ' ')
 

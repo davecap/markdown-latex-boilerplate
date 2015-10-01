@@ -1,8 +1,7 @@
-markdown-latex-boilerplate
+Pandoc Markdown-Latex Boilerplate
 ==========================
 
 * Initial Author: David Caplan http://www.davecap.com/
-
 * Extended Author: Brian Khuu http://www.briankhuu.com/
 
 Use this to write a paper in Markdown and render it as PDF.
@@ -12,10 +11,13 @@ Use this to write a paper in Markdown and render it as PDF.
  *   Step 3: make pdf (`make pdf` in linux)(`winmake pdf` in windows)
  *   Step 4: enjoy pdf
 
+**TL;DR: For windows users double-click on `winmake.bat`**
+
 # Versions
 
 * V1.0 - Now should be build-able in both linux and windows with consistant configeration system
 * V1.1 - Just noticed that pandoc can now natively generate pdf files and have thus removed markdown2latex command. Added pdf safemode which omits template if anything goes wrong with it. Also updated the default template to https://github.com/jgm/pandoc-templates/blob/master/default.latex which is the latest one that pandoc supports. Lastly builname is now definable in config file. It was previously hardcoded in.
+* V1.2 - Made the interface for winmake.bat more noobproof. Also arraged the pages to be more understandable and cleaner.
 
 ------------------------------------------------------------------------
 
@@ -31,12 +33,12 @@ Use this to write a paper in Markdown and render it as PDF.
 
 in config text file `config.txt`, you may have these default entries
 
-	SECTIONS_FILEPATH=sections.txt
-	BUILDNAME=example
-	REFERENCES=references.bib
-	TEMPLATE=template.tex
-	# TEMPLATE=ut-thesis.tex
-	CSL=elsevier-with-titles
+    SECTIONS_FILEPATH=_SECTIONS.txt
+    BUILDNAME=example
+    REFERENCES=references.bib
+    TEMPLATE=template.tex
+    # TEMPLATE=ut-thesis.tex
+    CSL=../elsevier-with-titles
 
 This is what it means
 
