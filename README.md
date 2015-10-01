@@ -87,7 +87,7 @@ This is only tested in windows, but hopefully should work on linux as well.
 ```
     example.md
     references.md
-``
+```
 	
     
 ## CSL: Citation Style Language
