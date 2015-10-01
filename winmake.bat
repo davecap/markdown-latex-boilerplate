@@ -34,13 +34,19 @@ for /f %%i in (config.temp.txt) do (
 REM Clear the CR+LF working file
 DEL config.temp.txt
 
-REM Load sections
-set /p SECTIONS=<%SECTIONS_FILEPATH% 
+REM Remove all newlines in SECTIONS
+setlocal enabledelayedexpansion
+set SECTIONS=
+for /f %%i In (%SECTIONS_FILEPATH%) DO set SECTIONS=!SECTIONS! %%i
+ECHO Sections Detected: %SECTIONS%
 
 REM Load CSL
 SET CSL_SET=--csl=./csl/%CSL%.csl
 IF "%CSL%"=="" SET CSL_SET=
 
+
+
+REM process user intention
 IF "%COMMAND%"=="clean" goto cleanOnly
 
 :pre
