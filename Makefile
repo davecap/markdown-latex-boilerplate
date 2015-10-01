@@ -13,7 +13,7 @@ CSL=elsevier-with-titles
 # Load in new config settings
 include config.txt
 cat := $(if $(filter $(OS),Windows_NT),type,cat)
-SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) )
+SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) | tr '\n' ' '  )
 
 
 # Perform task
