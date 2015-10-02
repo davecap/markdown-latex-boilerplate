@@ -216,3 +216,10 @@ You may want to move all your pages to a `/[page/` folder to keep the root folde
 ### Opening Windoww commandline in the right directly quickly
 
 SHIFT+RIGHT_CLICK on your folder in windows will display an extra entry in the dropdown saying "Open Command Window Here". This will save you lots of time. Or you can make a batch file like `buildpdf.bat` that contains `winmake pdf`.
+
+
+### editing .bib bibilography files
+
+Some software to consider
+
+* http://jabref.sourceforge.net/
