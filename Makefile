@@ -4,7 +4,7 @@
 
 SECTIONS_FILEPATH=sections.txt
 BUILDNAME=example
-REFERENCES=references.bib
+REFS=references.bib
 TEMPLATE=template.tex
 # TEMPLATE=ut-thesis.tex
 CSL=elsevier-with-titles
