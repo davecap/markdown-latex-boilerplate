@@ -1,6 +1,6 @@
 SECTIONS_FILEPATH=sections.txt
 BUILDNAME=example
 REFERENCES=references.bib
-TEMPLATE=template.tex
-# TEMPLATE=ut-thesis.tex
-CSL=../elsevier-with-titles
+TEMPLATE=templates/cuny.tex
+CSL=chicago-fullnote-bibliography
+METADATA=metadata.yml
