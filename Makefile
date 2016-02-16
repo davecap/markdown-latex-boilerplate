@@ -2,19 +2,21 @@
 
 # Default Config Settings
 
-SECTIONS_FILEPATH=sections.txt
+SECTIONS=example.md references.md
 BUILDNAME=example
 BUILD_PATH=build
 REFS=references.bib
 TEMPLATE=templates/template.tex
-METADATA='metadata.yml'
+METADATA=metadata.yml
 CSL=chicago-fullnote-bibliography
+MDCFG?=config.txt
+
+# Check for environment var for config
+include $(MDCFG)
 
 
-# Load in new config settings
-include config.txt
-cat := $(if $(filter $(OS),Windows_NT),type,cat)
-SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) )
+# cat := $(if $(filter $(OS),Windows_NT),type,cat)
+# SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) )
 
 
 # Perform task
@@ -22,29 +24,33 @@ SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) )
 
 .PHONY: pre
 pre:
-	mkdir -p $(BUILD_PATH)
+	@echo Using config: $(MDCFG)
+	@mkdir -p $(BUILD_PATH)
 
 .PHONY: post
 post:
-	@echo POST
+	@echo "Finished compiling all targets"
 
 .PHONY: clean
 clean:
-	rm -rf build
+	rm -rf $(BUILD_PATH)
+
+.PHONY: all
+all: clean pdf latex html embed epub post
 
 .PHONY: pdf
 pdf: pre
 	pandoc --toc -N --bibliography=$(REFS) -o ./$(BUILD_PATH)/$(BUILDNAME).pdf --csl=./csl/$(CSL).csl --template=$(TEMPLATE) $(SECTIONS) $(METADATA)
-	open ./$(BUILD_PATH)/$(BUILDNAME).pdf
+	@open ./$(BUILD_PATH)/$(BUILDNAME).pdf
 
 .PHONY: pdfsafemode
 pdfsafemode: pre
 	pandoc --toc -N --bibliography=$(REFS) -o ./$(BUILD_PATH)/$(BUILDNAME).pdf --csl=./csl/$(CSL).csl $(SECTIONS) $(METADATA)
-	open ./$(BUILD_PATH)/$(BUILDNAME).pdf
+	@open ./$(BUILD_PATH)/$(BUILDNAME).pdf
 	
 .PHONY: latex
 latex: pre
-	ln -s ../figures ./$(BUILD_PATH)/
+	ln -sf ../figures ./$(BUILD_PATH)/
 	pandoc --toc -N --bibliography=$(REFS) -o ./$(BUILD_PATH)/$(BUILDNAME).tex --csl=./csl/$(CSL).csl --template=$(TEMPLATE) $(SECTIONS) $(METADATA)
 
 .PHONY: html
