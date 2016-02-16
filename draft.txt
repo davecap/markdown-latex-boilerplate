@@ -1,6 +1,6 @@
-SECTIONS=sections/example.md sections/references.md
-BUILDNAME=draft
+SECTIONS=sections/delano/delano.md
+BUILDNAME=delano
 REFS="$(HOME)/GDrive/9_Sync/zotero/zotero.bib"
 TEMPLATE=templates/draft.tex
 CSL=chicago-fullnote-bibliography
-METADATA=metadata.yml
+METADATA=

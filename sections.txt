@@ -1,1 +1,1 @@
-sections/example.md sections/references.md
+delano/delano.md
