@@ -1,8 +1,7 @@
-
-
 # Default Config Settings
 
-SECTIONS=example.md references.md
+SECTIONS_DIR=sections
+SECTIONS_LIST=example.md references.md
 BUILDNAME=example
 BUILD_PATH=build
 REFS=references.bib
@@ -14,6 +13,11 @@ MDCFG?=config.txt
 # Check for environment var for config
 include $(MDCFG)
 
+# ideally, SECTIONS is defined by the config file, otherwise build the list
+# ourselves
+ifndef SECTIONS
+	SECTIONS=$(addprefix $(SECTIONS_DIR)/, $(SECTIONS_LIST))
+endif
 
 # cat := $(if $(filter $(OS),Windows_NT),type,cat)
 # SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) )
@@ -40,28 +44,28 @@ all: clean pdf latex html embed epub post
 
 .PHONY: pdf
 pdf: pre
-	pandoc --toc -N --bibliography=$(REFS) -o ./$(BUILD_PATH)/$(BUILDNAME).pdf --csl=./csl/$(CSL).csl --template=$(TEMPLATE) $(SECTIONS) $(METADATA)
-	@open ./$(BUILD_PATH)/$(BUILDNAME).pdf
+	pandoc --toc -N --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).pdf --csl=./csl/$(CSL).csl --template=$(TEMPLATE) $(SECTIONS) $(METADATA)
+	@open $(BUILD_PATH)/$(BUILDNAME).pdf
 
 .PHONY: pdfsafemode
 pdfsafemode: pre
-	pandoc --toc -N --bibliography=$(REFS) -o ./$(BUILD_PATH)/$(BUILDNAME).pdf --csl=./csl/$(CSL).csl $(SECTIONS) $(METADATA)
-	@open ./$(BUILD_PATH)/$(BUILDNAME).pdf
+	pandoc --toc -N --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).pdf --csl=./csl/$(CSL).csl $(SECTIONS) $(METADATA)
+	@open $(BUILD_PATH)/$(BUILDNAME).pdf
 	
 .PHONY: latex
 latex: pre
 	ln -sf ../figures ./$(BUILD_PATH)/
-	pandoc --toc -N --bibliography=$(REFS) -o ./$(BUILD_PATH)/$(BUILDNAME).tex --csl=./csl/$(CSL).csl --template=$(TEMPLATE) $(SECTIONS) $(METADATA)
+	pandoc --toc -N --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).tex --csl=./csl/$(CSL).csl --template=$(TEMPLATE) $(SECTIONS) $(METADATA)
 
 .PHONY: html
 html: pre
-	pandoc -S -5 --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=$(REFS) -o ./$(BUILD_PATH)/$(BUILDNAME).html -t html --normalize $(SECTIONS) $(METADATA)
+	pandoc -S -5 --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).html -t html --normalize $(SECTIONS) $(METADATA)
 
 .PHONY: embed
 embed: pre
-	pandoc -S --reference-links --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -N --bibliography=$(REFS) --csl=./csl/$(CSL).csl -o ./$(BUILD_PATH)/embed.html -t html --normalize $(SECTIONS) $(METADATA)
+	pandoc -S --reference-links --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -N --bibliography=$(REFS) --csl=./csl/$(CSL).csl -o $(BUILD_PATH)/embed.html -t html --normalize $(SECTIONS) $(METADATA)
 
 .PHONY: epub
 epub: pre
-	pandoc -S -s --biblatex --toc -N --bibliography=$(REFS) -o ./$(BUILD_PATH)/$(BUILDNAME).epub -t epub --normalize $(SECTIONS) $(METADATA)
+	pandoc -S -s --biblatex --toc -N --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).epub -t epub --normalize $(SECTIONS) $(METADATA)
 

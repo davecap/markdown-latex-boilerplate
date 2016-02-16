@@ -1,6 +1,10 @@
-SECTIONS=sections/delano/delano.md
+SECTIONS_DIR=$(HOME)/GDrive/0_Dissertation/0_WholeThing/delano
+SECTIONS_LIST=delano_intro.md delano_history.md
 BUILDNAME=delano
+BUILD_PATH=$(HOME)/GDrive/0_Dissertation/0_WholeThing/draft
 REFS="$(HOME)/GDrive/9_Sync/zotero/zotero.bib"
 TEMPLATE=templates/draft.tex
-CSL=chicago-fullnote-bibliography
-METADATA=
+CSL=aag
+METADATA=metadata.yml
+
+SECTIONS=$(addprefix $(SECTIONS_DIR)/, $(SECTIONS_LIST))

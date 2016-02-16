@@ -1,1 +1,0 @@
-In the shifting racial regime following the series of Civil Rights Acts and Supreme Court decisions that dismantled de jure racial segregation and discrimination throughout the middle of the 20th century, these state capacities become the contested territory of racialized struggles over the production of space. 

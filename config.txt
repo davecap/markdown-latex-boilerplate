@@ -1,5 +1,7 @@
-SECTIONS=sections/example.md sections/references.md
+SECTIONS_DIR=sections
+SECTIONS_LIST=example.md references.md
 BUILDNAME=draft
+BUILD_PATH=build
 REFS="$(HOME)/GDrive/9_Sync/zotero/zotero.bib"
 TEMPLATE=templates/draft.tex
 CSL=chicago-fullnote-bibliography
