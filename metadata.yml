@@ -13,13 +13,21 @@ comm4: ''
   # this is the acknowledgements
   #
 bibliography: '/Users/kmiyake/GDrive/9_Sync/zotero/zotero.bib'
-csl: chicago-fullnote-bibliography.csl
-fontsize: 12pt
-papersize: lettersize
-sides: oneside
-geometry: margin=1in
-# documentclass: templates/cuny
+csl: 'chicago-fullnote-bibliography.csl'
+papersize: 'lettersize'
+sides: 'oneside'
+# geometry: margin=1in
+geometry: 'margin-left=1in,margin-right=2in,margin-top=1in,margin-bottom=1in'
+fontsize: '12pt'
+fontfamily: 'Garamond'
+mainfont: 'Garamond'
+sansfont: 'Fira Sans'
+monofont: 'Inconsolata'
+documentclass: 'report'
 draft: true
-fontfamily: ebgaramond
+# toc: true # table of contents
+# toc-depth: 3
+# lof: true # list of figures
+# lot: true # list of tables
 
 ---

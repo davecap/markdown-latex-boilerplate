@@ -7,62 +7,14 @@ $endif$
 \usepackage{etoolbox}
 \usepackage[doublespacing]{setspace}
 % \usepackage{footmisc}
-$if(linestretch)$
-\setstretch{$linestretch$}
-$endif$
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-$if(euro)$
-  \usepackage{eurosym}
-$endif$
-\else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-    \usepackage{xltxtra,xunicode}
-  \else
-    \usepackage{fontspec}
-  \fi
-  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
-  \newcommand{\euro}{€}
-$if(mainfont)$
-    \setmainfont{$mainfont$}
-$endif$
-$if(sansfont)$
-    \setsansfont{$sansfont$}
-$endif$
-$if(monofont)$
-    \setmonofont[Mapping=tex-ansi]{$monofont$}
-$endif$
-$if(mathfont)$
-    \setmathfont(Digits,Latin,Greek){$mathfont$}
-$endif$
-$if(CJKmainfont)$
-    \usepackage{xeCJK}
-    \setCJKmainfont[$CJKoptions$]{$CJKmainfont$}
-$endif$
-\fi
-% use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
+% $if(linestretch)$
+% \setstretch{$linestretch$}
+% $endif$
 $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
-\ifxetex
-  \usepackage[setpagesize=false, % page size defined by xetex
-              unicode=false, % unicode breaks when used with xetex
-              xetex]{hyperref}
-\else
-  \usepackage[unicode=true]{hyperref}
-\fi
-\usepackage[usenames,dvipsnames]{color}
+\usepackage[unicode=true]{hyperref}
+\usepackage[pdftex,usenames,dvipsnames]{xcolor}
 \hypersetup{breaklinks=true,
             bookmarks=true,
             pdfauthor={$author-meta$},
@@ -73,18 +25,32 @@ $endif$
             % linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
             pdfborder={0 0 0}}
 \urlstyle{same}  % don't use monospace font for urls
+
+% to-dos
+\usepackage{xargs}
+\usepackage[colorinlistoftodos,prependcaption,textsize=small]{todonotes}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
 $if(lang)$
-\ifxetex
-  \usepackage{polyglossia}
-  \setmainlanguage[variant=$polyglossia-variant$]{$polyglossia-lang$}
-  \setotherlanguages{$for(polyglossia-otherlangs)$$polyglossia-otherlangs$$sep$,$endfor$}
-\else
   \usepackage[shorthands=off,$babel-lang$]{babel}
-\fi
 $endif$
 $if(natbib)$
 \usepackage{natbib}
 \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+% \setlength{\bibsep}{0.0pt}
+\setlength{\bibhang}{0.5in} % default value: \parindent
+% \setstretch{0.8}
+% \setlength{\bibitemsep}{0.0pt}
 $endif$
 $if(biblatex)$
 \usepackage{biblatex}
@@ -92,12 +58,13 @@ $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
 $endif$
+% \usepackage[format=hang,justification=raggedright,singlelinecheck=0,labelsep=period]{caption}
 $if(listings)$
 \usepackage{listings}
 $endif$
-$if(lhs)$
-\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
-$endif$
+% $if(lhs)$
+% \lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+% $endif$
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
@@ -122,7 +89,7 @@ $if(graphics)$
 $endif$
 $if(links-as-notes)$
 % Make links footnotes instead of hotlinks:
-% \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
 $endif$
 $if(strikeout)$
 \usepackage[normalem]{ulem}
@@ -134,7 +101,7 @@ $endif$
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 % \renewcommand{\baselinestretch}{2}
 \providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
 \renewenvironment{quotation}
                {\list{}{\listparindent=0pt%whatever you need
@@ -154,6 +121,7 @@ $endif$
 
 \doublespacing
 
+\usepackage{indentfirst}
 $if(numbersections)$
 \setcounter{secnumdepth}{5}
 $else$
@@ -163,21 +131,11 @@ $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
 $if(dir)$
-\ifxetex
-  % load bidi as late as possible as it modifies e.g. graphicx
-  $if(latex-dir-rtl)$
-  \usepackage[RTLdocument]{bidi}
-  $else$
-  \usepackage{bidi}
-  $endif$
-\fi
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \TeXXeTstate=1
   \newcommand{\RL}[1]{\beginR #1\endR}
   \newcommand{\LR}[1]{\beginL #1\endL}
   \newenvironment{RTL}{\beginR}{\endR}
   \newenvironment{LTR}{\beginL}{\endL}
-\fi
 $endif$
 
 \pagestyle{headings}
@@ -225,7 +183,6 @@ $endif$
 $endif$
 $if(biblatex)$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-
 $endif$
 $for(include-after)$
 $include-after$

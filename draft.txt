@@ -1,10 +1,11 @@
-SECTIONS_DIR=$(HOME)/GDrive/0_Dissertation/0_WholeThing/delano
-SECTIONS_LIST=delano_intro.md delano_history.md
+BASE_DIR=$(HOME)/GDrive/0_Dissertation/0_WholeThing
+SECTIONS_DIR=$(BASE_DIR)/delano
+SECTIONS_LIST=1-intro.md 2-history.md 3-water.md 4-proposed.md lawsuit.md courts.md struggle_continues.md conclusion.md
 BUILDNAME=delano
-BUILD_PATH=$(HOME)/GDrive/0_Dissertation/0_WholeThing/draft
+BUILD_PATH=$(BASE_DIR)/draft
 REFS="$(HOME)/GDrive/9_Sync/zotero/zotero.bib"
 TEMPLATE=templates/draft.tex
 CSL=aag
-METADATA=metadata.yml
-
+METADATA=$(BASE_DIR)/delano_metadata.yml
+PANDOC_OPTIONS=
 SECTIONS=$(addprefix $(SECTIONS_DIR)/, $(SECTIONS_LIST))
