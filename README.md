@@ -18,6 +18,7 @@ Use this to write a paper in Markdown and render it as PDF.
 * V1.0 - Now should be build-able in both linux and windows with consistant configeration system
 * V1.1 - Just noticed that pandoc can now natively generate pdf files and have thus removed markdown2latex command. Added pdf safemode which omits template if anything goes wrong with it. Also updated the default template to https://github.com/jgm/pandoc-templates/blob/master/default.latex which is the latest one that pandoc supports. Lastly builname is now definable in config file. It was previously hardcoded in.
 * V1.2 - Made the interface for winmake.bat more noobproof. Also arraged the pages to be more understandable and cleaner.
+* V1.3 - Decided to move all the pages and images to specifically a hardcoded /source/ folder. Which would help keep everything more cleaner.
 
 ------------------------------------------------------------------------
 
@@ -102,6 +103,8 @@ The CSL files are located in the csl submodule.
 
 Create build folder **This is always done before outputting a new build**
 
+Then jumps to the source directory for the next stage of actually making the document.
+
 ---
 
 	make post
@@ -118,31 +121,31 @@ Remove build folder
 
 	make pdf
 
-Create pdf `markdown2pdf --toc -N --bibliography=$(REFS) -o ./build/example.pdf --csl=./csl/$(CSL).csl --template=$(TEMPLATE) $(SECTIONS)
+Create pdf `markdown2pdf --toc -N --bibliography=../$(REFS) -o ../build/example.pdf --csl=../csl/$(CSL).csl --template=$../(TEMPLATE) $(SECTIONS)`
 
 ---
 
 	make latex
 
-Create latex `pandoc --toc -N --bibliography=$(REFS) -o ./build/example.tex --csl=./csl/$(CSL).csl --template=$(TEMPLATE) $(SECTIONS)`
+Create latex `pandoc --toc -N --bibliography=../$(REFS) -o ../build/example.tex --csl=../csl/$(CSL).csl --template=../$(TEMPLATE) $(SECTIONS)`
 
 ---
 
 	make html
 
-Create html `pandoc -S -5 --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=$(REFS) -o ./build/example.html -t html --normalize $(SECTIONS)`
+Create html `pandoc -S -5 --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=../$(REFS) -o ../build/example.html -t html --normalize $(SECTIONS)`
 
 ---
 
 	make embed
 
-Create embedded html `pandoc -S --reference-links --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -N --bibliography=$(REFS) --csl=./csl/$(CSL).csl -o ./build/embed.html -t html --normalize $(SECTIONS)`
+Create embedded html `pandoc -S --reference-links --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -N --bibliography=../$(REFS) --csl=../csl/$(CSL).csl -o ../build/embed.html -t html --normalize $(SECTIONS)`
 
 ---
 
 	make epub
 
-Create epub format `pandoc -S -s --biblatex --toc -N --bibliography=$(REFS) -o ./build/example.epub -t epub --normalize $(SECTIONS)`
+Create epub format `pandoc -S -s --biblatex --toc -N --bibliography=../$(REFS) -o ../build/example.epub -t epub --normalize $(SECTIONS)`
 
 ---
 
@@ -201,16 +204,6 @@ Opens up a prompt.
 
 ## Tips and Tricks
 
-### Keeping root folder neat
-
-Too many files may make `winmake.bat` and `makefile` hard to locate, along with it's configerations.
-
-You may want to move all your pages to a `/[page/` folder to keep the root folder clean. (Btw it is untested in linux)
-
-    ./pages/introduction.md
-    ./pages/literature.md
-    ./pages/example.md
-    ./pages/references.md
     
 
 ### Opening Windoww commandline in the right directly quickly
