@@ -26,10 +26,10 @@ Use this to write a paper in Markdown and render it as PDF.
 # Requirements
 
  Follow instruction on installing pandoc in this link http://pandoc.org/installing.html . For PDF output, you’ll also need to install LaTeX. We recommend MiKTeX.
- 
+
  You also need to install the content of https://github.com/citation-style-language/styles into the csl if you want to fully ultilize csl.
 
-# Building 
+# Building
 
 ## Configering the build system
 
@@ -48,26 +48,26 @@ This is what it means
 		Holds a link to a file
 		that contains a list
 		of pages to join
-		
+
 	BUILDNAME=
 		Let's you define the name of the generated file in the /build/ folder.
-	
+
 	REFERENCES=
 		Links to pandoc reference file
-		for the biography 
-		
+		for the biography
+
 	TEMPLATE=
 		Links to template file use by LaTeX
-		
+
 	CSL=
 		Choose from a list of Citation Style Language
 		files found in ./CSL/ e.g. IEEE style.
 
 Note:
- * `#` are comments. 
- * You cannot have spaces in your key=value like `TEMPLATE = ut-thesis.tex` if you want to use `winmake.bat`, it must be like `TEMPLATE=ut-thesis.tex`. 
+ * `#` are comments.
+ * You cannot have spaces in your key=value like `TEMPLATE = ut-thesis.tex` if you want to use `winmake.bat`, it must be like `TEMPLATE=ut-thesis.tex`.
  * If you open the config.txt file to modify it (e.g. notepad.exe), you need to close the config file, otherwise MikTex will come up with an error stating that the files are already in use.
- * 
+ *
 
 ### SECTIONS_FILEPATH
 
@@ -90,8 +90,8 @@ This is only tested in windows, but hopefully should work on linux as well.
     example.md
     references.md
 ```
-	
-    
+
+
 ## CSL: Citation Style Language
 
 The CSL files are located in the csl submodule.
@@ -115,7 +115,7 @@ Then jumps to the source directory for the next stage of actually making the doc
 ---
 
 	make clean
-	
+
 Remove build folder
 
 ---
@@ -169,29 +169,29 @@ Removes the build folder
 ---
 
 	winmake pdf
-	
+
 Builds a pdf file to ./build/ folder. Requires LaTeX.
-	
+
 ---
 
 	winmake pdf-safemode
-	
+
 Builds a pdf file to ./build/ folder. Requires LaTeX. Ignores template and CSL settings.
-	
+
 ---
-	
+
 	winmake epub
-	
-Builds a epub file to ./build/ folder 
-	
+
+Builds a epub file to ./build/ folder
+
 ---
 
 	winmake html
-	
-Builds a html file to ./build/ folder 
+
+Builds a html file to ./build/ folder
 
 ---
-	
+
 	winmake
 
 Opens up a prompt.
@@ -208,7 +208,7 @@ Opens up a prompt.
 
 You are not restricted to using winmake.bat in windows. If you install git for windows from http://www.git-scm.com/ in addition to the make program in http://gnuwin32.sourceforge.net/packages/make.htm (Also add the program to path). This is since a copy of git will include a Git Bash Shell, which will support unix commands like `cat` etc... .
 
-For your convenience, a copy of make.exe (As of 25 November 2006) is included. [Being GPLed its source code is also in the website.](http://gnuwin32.sourceforge.net/packages/make.htm). 
+For your convenience, a copy of make.exe (As of 25 November 2006) is included. [Being GPLed its source code is also in the website.](http://gnuwin32.sourceforge.net/packages/make.htm).
 
 ### Opening Windoww commandline in the right directly quickly
 
