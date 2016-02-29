@@ -50,7 +50,6 @@ REM process user intention
 IF "%COMMAND%"=="clean" goto cleanOnly
 
 :pre
-rmdir build /S /q
 mkdir build
 
 REM ECHO Menu settings here
@@ -88,43 +87,51 @@ ECHO.
 goto exit
 
 :cleanOnly
-ECHO remove build folder
+ECHO cleans build folder
 rmdir build /S /q
+mkdir build
 goto exit
 
 :pdf
 ECHO ## PDF MODE
 REM If something goes wrong as in "Undefined control sequence". It usually imply that there is something wrong with the latex template. Use safemode
 cd source
-pandoc --toc -N --bibliography=../%REFERENCES% -o ../build/%BUILDNAME%.pdf %CSL_SET% --template=../%TEMPLATE% %SECTIONS%
-goto exit
+pandoc --toc -N --bibliography=./%REFERENCES% -o ../build/%BUILDNAME%.pdf %CSL_SET% --template=../%TEMPLATE% %SECTIONS%
+start ../build/%BUILDNAME%.pdf
+goto exit_nopause
 
 :pdfsafemode
 ECHO ## PDF SAFEMODE
 REM Same as pdf mode, but without the template. Also removed CSL since people may forget to download a CSL sheet.
 cd source
-pandoc --toc -N --bibliography=../%REFERENCES% -o ../build/%BUILDNAME%.pdf %SECTIONS%
+pandoc --toc -N --bibliography=./%REFERENCES% -o ../build/%BUILDNAME%.pdf %SECTIONS%
+start ../build/%BUILDNAME%.pdf
 goto exit
 
 :epub
 ECHO ## EPUB MODE
 cd source
-pandoc -S -s --biblatex --toc -N --bibliography=../%REFS% -o ../build/%BUILDNAME%.epub -t epub --normalize %SECTIONS%
-goto exit
+pandoc -S -s --biblatex --toc -N --bibliography=./%REFERENCES% -o ../build/%BUILDNAME%.epub -t epub --normalize %SECTIONS%
+start ../build/%BUILDNAME%.epub
+goto exit_nopause
 
 :html
 ECHO ## HTML MODE
 cd source
-pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=../%REFERENCES% -o ../build/%BUILDNAME%.html -t html --normalize %SECTIONS%
-goto exit
+pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=./%REFERENCES% -o ../build/%BUILDNAME%.html -t html --normalize %SECTIONS%
+start ../build/%BUILDNAME%.html
+goto exit_nopause
 
 :htmlstandalone
 ECHO ## HTML MODE
 cd source
-pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=../%REFERENCES% -o ../build/%BUILDNAME%.html -t html --self-contained --normalize %SECTIONS%
-goto exit
+pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=./%REFERENCES% -o ../build/%BUILDNAME%.html -t html --self-contained --normalize %SECTIONS%
+start ../build/%BUILDNAME%.html
+goto exit_nopause
 
 :exit
 ECHO.
 ECHO All Done!
 PAUSE
+
+:exit_nopause

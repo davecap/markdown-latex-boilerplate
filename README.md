@@ -19,6 +19,7 @@ Use this to write a paper in Markdown and render it as PDF.
 * V1.1 - Just noticed that pandoc can now natively generate pdf files and have thus removed markdown2latex command. Added pdf safemode which omits template if anything goes wrong with it. Also updated the default template to https://github.com/jgm/pandoc-templates/blob/master/default.latex which is the latest one that pandoc supports. Lastly builname is now definable in config file. It was previously hardcoded in.
 * V1.2 - Made the interface for winmake.bat more noobproof. Also arraged the pages to be more understandable and cleaner.
 * V1.3 - Decided to move all the pages and images to specifically a hardcoded /source/ folder. Which would help keep everything more cleaner.
+* V1.4 - Changed the makefile script to just focus on linux compatible code rather than windows as well (Since we can just use the .bat file).
 
 ------------------------------------------------------------------------
 
@@ -198,13 +199,16 @@ Opens up a prompt.
 ---
 
 
-
 ------------------------------------------------------------------------
 
 
 ## Tips and Tricks
 
-    
+### Using makefile in windows
+
+You are not restricted to using winmake.bat in windows. If you install git for windows from http://www.git-scm.com/ in addition to the make program in http://gnuwin32.sourceforge.net/packages/make.htm (Also add the program to path). This is since a copy of git will include a Git Bash Shell, which will support unix commands like `cat` etc... .
+
+For your convenience, a copy of make.exe (As of 25 November 2006) is included. [Being GPLed its source code is also in the website.](http://gnuwin32.sourceforge.net/packages/make.htm). 
 
 ### Opening Windoww commandline in the right directly quickly
 
