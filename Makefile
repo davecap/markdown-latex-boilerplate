@@ -1,8 +1,6 @@
-
-
 # Default Config Settings
 
-SECTIONS_FILEPATH=sections.txt
+SECTIONS_FILEPATH=_SECTIONS.txt
 BUILDNAME=example
 REFS=references.bib
 TEMPLATE=template.tex
@@ -11,13 +9,15 @@ CSL=elsevier-with-titles
 
 
 # Load in new config settings
-include config.txt
-cat := $(if $(filter $(OS),Windows_NT),type,cat)
-SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) )
+include _CONFIG.txt
+#cat := $(if $(filter $(OS),Windows_NT),type,cat)
+#SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) | tr '\n' ' ')
 
+# This combines all the filepaths in SECTIONS_FILEPATH file
+SECTIONS := $(shell cat $(SECTIONS_FILEPATH) | tr '\n\r' ' ' | tr '\n' ' ' )
 
 # Perform task
-.PHONY: all clean html pdf epub embed
+.PHONY: all clean html pdf epub embed viewpdf viewhtml
 
 pre:
 	mkdir -p build
@@ -28,25 +28,39 @@ post:
 clean:
 	rm -rf build
 
+# Reason for `&&\` : http://stackoverflow.com/questions/1789594/how-to-write-cd-command-in-makefile
+
 pdf: pre
-	pandoc --toc -N --bibliography=$(REFS) -o ./build/$(BUILDNAME).pdf --csl=./csl/$(CSL).csl --template=$(TEMPLATE) $(SECTIONS)
-	#open ./build/$(BUILDNAME).pdf
+		cd ./source/ && \
+		pandoc --toc -N --bibliography=$(REFERENCES) -o ../build/$(BUILDNAME).pdf --csl=../csl/$(CSL).csl --template=../$(TEMPLATE) $(SECTIONS)
 
 pdfsafemode: pre
-	pandoc --toc -N --bibliography=$(REFS) -o ./build/$(BUILDNAME).pdf --csl=./csl/$(CSL).csl $(SECTIONS)
-	#open ./build/$(BUILDNAME).pdf
-	
+		cd ./source/ && \
+		pandoc --toc -N --bibliography=$(REFERENCES) -o ../build/$(BUILDNAME).pdf --csl=../csl/$(CSL).csl $(SECTIONS)
+
 latex: pre
-	ln -s ../figures ./build/
-	pandoc --toc -N --bibliography=$(REFS) -o ./build/$(BUILDNAME).tex --csl=./csl/$(CSL).csl --template=$(TEMPLATE) $(SECTIONS)
+	  ln -s ../figures ./build/
+		cd ./source/ && \
+		pandoc --toc -N --bibliography=$(REFERENCES) -o ../build/$(BUILDNAME).tex --csl=../csl/$(CSL).csl --template=$(TEMPLATE) $(SECTIONS)
 
 html: pre
-	pandoc -S -5 --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=$(REFS) -o ./build/$(BUILDNAME).html -t html --normalize $(SECTIONS)
+		cd ./source/ && \
+		pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=$(REFS) -o ../build/$(BUILDNAME).html -t html --normalize $(SECTIONS)
 
 embed: pre
-	pandoc -S --reference-links --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -N --bibliography=$(REFS) --csl=./csl/$(CSL).csl -o ./build/embed.html -t html --normalize $(SECTIONS)
+		cd ./source/ && \
+		pandoc -S --reference-links --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -N --bibliography=$(REFS) --csl=../csl/$(CSL).csl -o ../build/$(BUILDNAME).html -t html --normalize $(SECTIONS)
 
 epub: pre
-	pandoc -S -s --biblatex --toc -N --bibliography=$(REFS) -o ./build/$(BUILDNAME).epub -t epub --normalize $(SECTIONS)
+		cd ./source/ && \
+		pandoc -S -s --biblatex --toc -N --bibliography=$(REFS) -o ../build/$(BUILDNAME).epub -t epub --normalize $(SECTIONS)
+
+# open files that were rendered
+
+viewpdf:
+		open ./build/$(BUILDNAME).pdf
+
+viewhtml:
+		open ./build/$(BUILDNAME).html
 
 default: pdf
