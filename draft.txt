@@ -1,6 +1,6 @@
 BASE_DIR=$(HOME)/GDrive/0_Dissertation/0_WholeThing
 SECTIONS_DIR=$(BASE_DIR)/delano
-SECTIONS_LIST=1-intro.md 2-history.md 3-water.md 4-proposed.md lawsuit.md courts.md struggle_continues.md conclusion.md
+SECTIONS_LIST=1-intro.md 2-history.md 3-water.md 4-proposed.md 5-lawsuit.md courts.md conclusion.md
 BUILDNAME=delano
 BUILD_PATH=$(BASE_DIR)/draft
 REFS="$(HOME)/GDrive/9_Sync/zotero/zotero.bib"
