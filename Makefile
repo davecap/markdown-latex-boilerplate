@@ -52,7 +52,7 @@ clean:
 	rm -rf $(BUILD_PATH)
 
 .PHONY: all
-all: clean pdf latex html embed epub post
+all: clean pdf latex html docx odt embed epub post
 
 .PHONY: pdf
 pdf: pre

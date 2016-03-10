@@ -5,6 +5,7 @@ BUILDNAME=delano
 BUILD_PATH=$(BASE_DIR)/draft
 REFS="$(HOME)/GDrive/9_Sync/zotero/zotero.bib"
 TEMPLATE=templates/draft.tex
+DOCX_TEMPLATE=templates/draft.docx
 CSL=aag
 METADATA=$(BASE_DIR)/delano_metadata.yml
 PANDOC_OPTIONS=
