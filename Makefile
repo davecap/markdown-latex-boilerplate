@@ -66,11 +66,11 @@ pdfsafemode: pre
 
 .PHONY: docx
 docx: pre
-	pandoc -S --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).docx --csl=./csl/$(CSL).csl --reference-docx$(DOCX_TEMPLATE) $(PANDOC_OPTIONS) $(SECTIONS) $(METADATA)
+	pandoc -S --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).docx --csl=./csl/$(CSL).csl $(DOCX_TEMPLATE) $(PANDOC_OPTIONS) $(SECTIONS) $(METADATA)
 
 .PHONY: odt
 odt: pre
-	pandoc -S --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).odt --csl=./csl/$(CSL).csl --reference-odt$(ODT_TEMPLATE) $(PANDOC_OPTIONS) $(SECTIONS) $(METADATA)
+	pandoc -S --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).odt --csl=./csl/$(CSL).csl $(ODT_TEMPLATE) $(PANDOC_OPTIONS) $(SECTIONS) $(METADATA)
 
 .PHONY: latex
 latex: pre
