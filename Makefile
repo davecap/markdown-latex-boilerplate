@@ -21,6 +21,7 @@ include $(MDCFG)
 ifndef SECTIONS
 	SECTIONS=$(addprefix $(SECTIONS_DIR)/, $(SECTIONS_LIST))
 endif
+MKLIST=$(METADATA) $(SECTIONS)
 
 ifdef DOCX_TEMPLATE
 	DOCX_TEMPLATE:=--reference-docx $(DOCX_TEMPLATE)
@@ -56,36 +57,36 @@ all: clean pdf latex html docx odt embed epub post
 
 .PHONY: pdf
 pdf: pre
-	pandoc --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).pdf --csl=./csl/$(CSL).csl --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(SECTIONS) $(METADATA)
+	pandoc --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).pdf --csl=csl/$(CSL).csl --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 	@open $(BUILD_PATH)/$(BUILDNAME).pdf
 
 .PHONY: pdfsafemode
 pdfsafemode: pre
-	pandoc --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).pdf --csl=./csl/$(CSL).csl $(PANDOC_OPTIONS) $(SECTIONS) $(METADATA)
+	pandoc --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).pdf --csl=csl/$(CSL).csl $(PANDOC_OPTIONS) $(MKLIST)
 	@open $(BUILD_PATH)/$(BUILDNAME).pdf
 
 .PHONY: docx
 docx: pre
-	pandoc -S --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).docx --csl=./csl/$(CSL).csl $(DOCX_TEMPLATE) $(PANDOC_OPTIONS) $(SECTIONS) $(METADATA)
+	pandoc -S --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).docx --csl=csl/$(CSL).csl $(DOCX_TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: odt
 odt: pre
-	pandoc -S --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).odt --csl=./csl/$(CSL).csl $(ODT_TEMPLATE) $(PANDOC_OPTIONS) $(SECTIONS) $(METADATA)
+	pandoc -S --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).odt --csl=csl/$(CSL).csl $(ODT_TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: latex
 latex: pre
 	ln -sf ../figures $(BUILD_PATH)/
-	pandoc --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).tex --csl=./csl/$(CSL).csl --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(SECTIONS) $(METADATA)
+	pandoc --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).tex --csl=csl/$(CSL).csl --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: html
 html: pre
-	pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --toc --bibliography=$(REFS) --csl=./csl/$(CSL).csl -o $(BUILD_PATH)/$(BUILDNAME).html -t html5 --normalize $(PANDOC_OPTIONS) $(SECTIONS) $(METADATA)
+	pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --toc --bibliography=$(REFS) --csl=csl/$(CSL).csl -o $(BUILD_PATH)/$(BUILDNAME).html -t html5 --normalize $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: embed
 embed: pre
-	pandoc -S --reference-links --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs --bibliography=$(REFS) --csl=./csl/$(CSL).csl -o $(BUILD_PATH)/embed.html -t html --normalize $(PANDOC_OPTIONS) $(SECTIONS) $(METADATA)
+	pandoc -S --reference-links --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs --bibliography=$(REFS) --csl=csl/$(CSL).csl -o $(BUILD_PATH)/embed.html -t html --normalize $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: epub
 epub: pre
-	pandoc -S -s --biblatex --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).epub -t epub --normalize $(PANDOC_OPTIONS) $(SECTIONS) $(METADATA)
+	pandoc -S -s --biblatex --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).epub -t epub --normalize $(PANDOC_OPTIONS) $(MKLIST)
 

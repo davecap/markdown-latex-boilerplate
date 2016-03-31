@@ -44,21 +44,21 @@ $endif$
 $if(lang)$
   \usepackage[shorthands=off,$babel-lang$]{babel}
 $endif$
-$if(natbib)$
-\usepackage{natbib}
-\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
-% \setlength{\bibsep}{0.0pt}
-\setlength{\bibhang}{0.5in} % default value: \parindent
-% \setstretch{0.8}
-% \setlength{\bibitemsep}{0.0pt}
-$endif$
-$if(biblatex)$
-\usepackage{biblatex}
-$for(bibliography)$
-\addbibresource{$bibliography$}
-$endfor$
-$endif$
-% \usepackage[format=hang,justification=raggedright,singlelinecheck=0,labelsep=period]{caption}
+% $if(natbib)$
+% \usepackage{natbib}
+% \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+% % \setlength{\bibsep}{0.0pt}
+% \setlength{\bibhang}{0.5in} % default value: \parindent
+% % \setstretch{0.8}
+% % \setlength{\bibitemsep}{0.0pt}
+% $endif$
+% $if(biblatex)$
+% \usepackage{biblatex}
+% $for(bibliography)$
+% \addbibresource{$bibliography$}
+% $endfor$
+% $endif$
+% % \usepackage[format=hang,justification=raggedright,singlelinecheck=0,labelsep=period]{caption}
 $if(listings)$
 \usepackage{listings}
 $endif$
@@ -68,13 +68,16 @@ $endif$
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
+
 $if(verbatim-in-note)$
 \usepackage{fancyvrb}
 \VerbatimFootnotes
 $endif$
+
 $if(tables)$
 \usepackage{longtable,booktabs}
 $endif$
+
 $if(graphics)$
 \usepackage{graphicx,grffile}
 \makeatletter
@@ -87,15 +90,19 @@ $if(graphics)$
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 $endif$
+
 $if(links-as-notes)$
 % Make links footnotes instead of hotlinks:
 \renewcommand{\href}[2]{#2\footnote{\url{#1}}}
 $endif$
+
 $if(strikeout)$
 \usepackage[normalem]{ulem}
 % avoid problems with \sout in headers with hyperref:
 \pdfstringdefDisableCommands{\renewcommand{\sout}{}}
 $endif$
+
+% Line spacing %
 \setlength{\parindent}{4em}
 \setlength{\parskip}{1em plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
@@ -105,7 +112,8 @@ $endif$
 
 \renewenvironment{quotation}
                {\list{}{\listparindent=0pt%whatever you need
-                        \itemindent    \listparindent
+                        \itemindent \listparindent
+                        \onehalfspacing
                         \leftmargin=5em%  whatever you need
                         \rightmargin=5em%whatever you need
                         \topsep=0pt%%%%%  whatever you need
