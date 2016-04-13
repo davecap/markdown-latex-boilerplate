@@ -16,19 +16,30 @@ MDCFG?=config.txt
 # Check for environment var for config
 include $(MDCFG)
 
+# set up frontmatter if defined in the config file
+ifdef FRONT_LIST
+  FRONT_MATTER=$(addprefix $(FRONT_DIR)/, $(FRONT_LIST))
+endif
+
+# set up backmatter if defined in the config file
+ifdef BACK_LIST
+  BACK_MATTER=$(addprefix $(BACK_DIR)/, $(BACK_LIST))
+endif
+
 # ideally, SECTIONS is defined by the config file, otherwise build the list
 # ourselves
 ifndef SECTIONS
-	SECTIONS=$(addprefix $(SECTIONS_DIR)/, $(SECTIONS_LIST))
+  SECTIONS=$(addprefix $(SECTIONS_DIR)/, $(SECTIONS_LIST))
 endif
-MKLIST=$(METADATA) $(SECTIONS)
+
+MKLIST=$(METADATA) $(FRONT_MATTER) $(SECTIONS) $(BACK_MATTER)
 
 ifdef DOCX_TEMPLATE
-	DOCX_TEMPLATE:=--reference-docx $(DOCX_TEMPLATE)
+  DOCX_TEMPLATE:=--reference-docx $(DOCX_TEMPLATE)
 endif
 
 ifdef ODT_TEMPLATE
-	ODT_TEMPLATE:=--reference-docx $(ODT_TEMPLATE)
+  ODT_TEMPLATE:=--reference-docx $(ODT_TEMPLATE)
 endif
 
 # cat := $(if $(filter $(OS),Windows_NT),type,cat)
@@ -40,7 +51,6 @@ endif
 
 .PHONY: pre
 pre:
-	@echo $(DOCX_TEMPLATE)
 	@echo Using config: $(MDCFG)
 	@mkdir -p $(BUILD_PATH)
 
@@ -65,6 +75,7 @@ pdfsafemode: pre
 	pandoc --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).pdf --csl=csl/$(CSL).csl $(PANDOC_OPTIONS) $(MKLIST)
 	@open $(BUILD_PATH)/$(BUILDNAME).pdf
 
+
 .PHONY: docx
 docx: pre
 	pandoc -S --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).docx --csl=csl/$(CSL).csl $(DOCX_TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
@@ -75,7 +86,7 @@ odt: pre
 
 .PHONY: latex
 latex: pre
-	ln -sf ../figures $(BUILD_PATH)/
+	cp -r $(BASE_DIR)/figures $(BUILD_PATH)/
 	pandoc --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).tex --csl=csl/$(CSL).csl --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: html

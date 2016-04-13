@@ -179,16 +179,16 @@
       }%
    \renewcommand\newblock{\par}}%
 }
-\ExecuteOptions{letterpaper,10pt,twoside,onecolumn,final,openright}
+% \ExecuteOptions{letterpaper,10pt,twoside,onecolumn,final,openright}
 \ProcessOptions
-\input{bk1\@ptsize.clo}
-\setlength\lineskip{1\p@}
-\setlength\normallineskip{1\p@}
-\renewcommand\baselinestretch{1}
+% \input{bk1\@ptsize.clo}
+% \setlength\lineskip{1\p@}
+% \setlength\normallineskip{1\p@}
+% \renewcommand\baselinestretch{1}
 
-\newcommand{\doublespaced}{\baselineskip=28pt}
-\newcommand{\almostdoublespaced}{\baselineskip=23pt}
-\newcommand{\singlespaced}{\baselineskip=15pt}
+% \newcommand{\doublespaced}{\baselineskip=28pt}
+% \newcommand{\almostdoublespaced}{\baselineskip=23pt}
+% \newcommand{\singlespaced}{\baselineskip=15pt}
 
 % the following is to implement single-spaced footnotes in a
 % double-spaced environment.  The \basefootnote code was copied from
@@ -198,7 +198,7 @@
     \@footnotemark \@footnotetext}}
 \renewcommand{\footnote}[1]{\begingroup\singlespaced\basefootnote{#1}\endgroup}
 
-\topmargin=0.75in
+% \topmargin=0.75in
 
 
 \setlength\parskip{0\p@ \@plus \p@}
@@ -283,8 +283,8 @@
   \vskip 30\p@
 
   \begin{raggedright}%
-  A dissertation submitted to the Graduate Faculty in Mathematics
-  in partial fulfillment of the requirements for the degree of
+  A dissertation submitted to the Graduate Faculty in Earth and Environmental
+  Sciences in partial fulfillment of the requirements for the degree of
   Doctor of Philosophy, The City University of New York.
   \end{raggedright}\par
   \begin{center}%
@@ -320,9 +320,9 @@
 
 \newcommand\makeapprovalpage[4]{\begin{approvalpage}%
 \singlespaced
-\noindent This manuscript has been read and accepted for the
-Graduate Faculty in Mathematics in satisfaction of the
-dissertation requirements for the degree of Doctor of Philosophy.
+\noindent This manuscript has been read and accepted for the Graduate Faculty
+in Earth and Environmental Sciences in satisfaction of the dissertation 
+requirements for the degree of Doctor of Philosophy.
 
 \begin{tabbing}
 \hspace{3.5 in} \= \textbf{(required signature)} \\

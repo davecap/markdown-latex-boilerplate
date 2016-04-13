@@ -1,4 +1,4 @@
-\documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$,$endif$$if(sides)$$sides$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+\documentclass[$if(draft)$$draft$,$endif$$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$,$endif$$if(sides)$$sides$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
 $if(fontfamily)$
 \usepackage{$fontfamily$}
 $else$
@@ -11,14 +11,16 @@ $endif$
 % \setstretch{$linestretch$}
 % $endif$
 $if(geometry)$
+\usepackage{lmodern}
+\usepackage{layouts}
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
 \usepackage[unicode=true]{hyperref}
 \usepackage[pdftex,usenames,dvipsnames]{xcolor}
 \hypersetup{breaklinks=true,
             bookmarks=true,
-            pdfauthor={$author-meta$},
-            pdftitle={$title-meta$},
+            pdfauthor={$author$},
+            pdftitle={$title$},
             colorlinks=false,
             % citecolor=$if(citecolor)$$citecolor$$else$blue$endif$,
             % urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
@@ -58,7 +60,8 @@ $endif$
 % \addbibresource{$bibliography$}
 % $endfor$
 % $endif$
-% % \usepackage[format=hang,justification=raggedright,singlelinecheck=0,labelsep=period]{caption}
+\usepackage[format=hang,justification=raggedright,singlelinecheck=0,labelsep=period]{caption}
+\usepackage[format=hang,justification=raggedright,singlelinecheck=0,labelsep=period]{subcaption}
 $if(listings)$
 \usepackage{listings}
 $endif$
@@ -121,6 +124,8 @@ $endif$
                 \item\relax}
                {\endlist}
 
+\let\oldfootnotesize\footnotesize
+\renewcommand{\footnotesize}{\normalsize}
 % \renewcommand\footnotelayout{\fontsize{10}{12}\selectfont}
 % space between footnotes %
 \setlength{\footnotesep}{1em}
@@ -170,30 +175,139 @@ $endfor$
 
 \begin{document}
 
+% \frontmatter
+
+$if(titlepage)$
 $if(title)$
-\maketitle
+\begin{titlepage}
+\begin{center}
+\vspace{2in}
+\textsc{$title$} \\[0.5in]
+by \\[0.5in]
+\textsc{$author$}\par
+\vspace{\fill}
+$if(program)$
+\begin{raggedright}
+A dissertation submitted to the Graduate Faculty in $program$ in partial fulfillment of the requirements for the degree of Doctor of Philosophy, The City University of New York
+$title-desc$\\[0.25in]
+\end{raggedright}\par
 $endif$
+
+\number\year
+
+\end{center}
+\end{titlepage}
+\setcounter{page}{2}
+% \maketitle
+$endif$
+$endif$
+
+$if(copyrightpage)$
+\phantom{}\vspace{\fill}
+\begin{center}
+\copyright\number\year\\
+\textsc{$author$}\\
+All Rights Reserved\\
+\end{center}
+% \makecopyrightpage
+$endif$
+
+$if(approvalpage)$
+$if(program)$
+% \makeapprovalpage{advisor}$if(comm2)${comm2}$endif$$if(comm3)${comm3}$endif$$if(comm4)${comm4}$endif$
+\newpage
+\begin{center}
+This manuscript has been read and accepted by the Graduate Faculty in $program$ in satisfaction of the dissertation requirement for the degree of Doctor of Philosophy.
+\end{center}
+
+\vspace{0.75in}
+
+\setlength{\tabcolsep}{0pt}
+\begin{tabular}{p{1.75in}p{0.5in}p{3.5in}}
+\multicolumn{3}{l}{\textbf{Professor $advisor$}}\\
+\\
+\hrulefill& &\hrulefill \\
+Date & & Chair of Examining Committee\\
+\\
+\multicolumn{3}{l}{\textbf{Professor $eo$}}\\
+\\
+\hrulefill& &\hrulefill \\
+Date & & Executive Officer\\
+\end{tabular}
+
+\vspace{0.75in}
+
+\begin{tabular}{l}
+  $if(comm2)$
+  \textbf{Professor $comm2$} \\
+  $endif$
+  $if(comm3)$
+  \textbf{Professor $comm3$} \\
+  $endif$
+  $if(comm4)$
+  \textbf{Professor $comm4$} \\
+  $endif$
+  $if(comm5)$
+  \textbf{Professor $comm5$} \\
+  $endif$
+Supervisory Committee \\
+\end{tabular}
+
+
+\vspace{\fill}
+\begin{center}
+\textsc{The City University of New York}
+\end{center}
+$endif$
+$endif$
+
+
+$if(abstractpage)$
+$if(advisor)$
+$if(abstract)$
+\newpage
+\begin{center}%
+  Abstract \\
+  \textsc{$title$} \\
+  by \\
+  \textsc{$author$} \\[0.25in]
+\end{center}
+\vspace{0.25in}
+\noindent Advisor: $advisor$
+\vspace{0.25in}
+
+\noindent $abstract$
+
+% \makeabstractpage{advisor}{abstract}
+$endif$
+$endif$
+$endif$
+
+% table of contents, figures, tables
+$if(toc)$
+{
+\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+$if(lot)$
+\listoftables
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+
+%% \chapter*{Introduction}
+%% \addcontentsline{toc}{chapter}{\numberline{}Introduction}
+%% \markboth{Introduction}{INTRODUCTION}
 
 $body$
 
-$if(natbib)$
-$if(bibliography)$
-$if(biblio-title)$
-$if(book-class)$
-\renewcommand\bibname{$biblio-title$}
-$else$
-\renewcommand\refname{$biblio-title$}
-$endif$
-$endif$
-\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
-
-$endif$
-$endif$
-$if(biblatex)$
-\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-$endif$
+%% \backmatter
+%% \begin{thebibliography}{n} %(where n is the longest item)
+%% \addcontentsline{toc}{chapter}{\numberline{}Bibliography }
 $for(include-after)$
 $include-after$
-
 $endfor$
 \end{document}
