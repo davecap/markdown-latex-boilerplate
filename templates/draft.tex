@@ -106,6 +106,7 @@ $if(strikeout)$
 $endif$
 
 % Line spacing %
+\doublespacing
 \setlength{\parindent}{4em}
 \setlength{\parskip}{1em plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
@@ -132,17 +133,16 @@ $endif$
 \setlength{\footnotesep}{1em}
 % space between text and footnotes
 \setlength{\skip\footins}{2em}
+$if(verbatim-in-note)$
+\VerbatimFootnotes % allows verbatim text in footnotes
+$endif$
 
-\doublespacing
 
 \usepackage{indentfirst}
 $if(numbersections)$
 \setcounter{secnumdepth}{5}
 $else$
 \setcounter{secnumdepth}{0}
-$endif$
-$if(verbatim-in-note)$
-\VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
 $if(dir)$
   \TeXXeTstate=1
