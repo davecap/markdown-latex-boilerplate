@@ -4,6 +4,15 @@ $if(fontfamily)$
 $else$
 \usepackage{lmodern}
 $endif$
+
+% Section/Chapter headings
+\usepackage{titlesec}
+% Use the default font for headings
+\titleformat{\chapter}[block]{\bfseries}{Chapter \thechapter\\}{1em}{\large\bfseries}
+\titleformat{\section}[block]{\normalfont\fontsize{12}{18}\bfseries\filcenter}{}{}{}
+\titleformat{\subsection}[block]{\normalfont\fontsize{12}{18}\bfseries\itshape}{}{}{}
+\titleformat{\subsubsection}{\normalfont\fontsize{12}{18}\itshape}{}{}{}
+
 \usepackage{etoolbox}
 \usepackage[doublespacing]{setspace}
 % \usepackage{footmisc}
@@ -137,13 +146,17 @@ $if(verbatim-in-note)$
 \VerbatimFootnotes % allows verbatim text in footnotes
 $endif$
 
+% Always indent the first paragraph
+% \usepackage{indentfirst}
 
-\usepackage{indentfirst}
+% Section numbering
 $if(numbersections)$
 \setcounter{secnumdepth}{5}
 $else$
 \setcounter{secnumdepth}{0}
 $endif$
+
+% Right-to-left reading direction
 $if(dir)$
   \TeXXeTstate=1
   \newcommand{\RL}[1]{\beginR #1\endR}
@@ -176,7 +189,7 @@ $endfor$
 
 \begin{document}
 
-% \frontmatter
+% Frontmatter
 
 $if(titlepage)$
 $if(title)$
@@ -215,7 +228,6 @@ $endif$
 
 $if(approvalpage)$
 $if(program)$
-% \makeapprovalpage{advisor}$if(comm2)${comm2}$endif$$if(comm3)${comm3}$endif$$if(comm4)${comm4}$endif$
 \newpage
 \begin{center}
 This manuscript has been read and accepted by the Graduate Faculty in $program$ in satisfaction of the dissertation requirement for the degree of Doctor of Philosophy.
@@ -254,14 +266,12 @@ Date & & Executive Officer\\
 Supervisory Committee \\
 \end{tabular}
 
-
 \vspace{\fill}
 \begin{center}
 \textsc{The City University of New York}
 \end{center}
 $endif$
 $endif$
-
 
 $if(abstractpage)$
 $if(advisor)$
@@ -286,11 +296,9 @@ $endif$
 
 % table of contents, figures, tables
 $if(toc)$
-{
-\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+{\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
 \setcounter{tocdepth}{$toc-depth$}
-\tableofcontents
-}
+\tableofcontents}
 $endif$
 $if(lot)$
 \listoftables
