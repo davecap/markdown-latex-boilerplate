@@ -88,7 +88,7 @@ odt: pre
 
 .PHONY: latex
 latex: pre
-	cp -r $(BASE_DIR)/figures $(BUILD_PATH)/
+	if [ -d "$(BASE_DIR)/figures" ]; then cp -r $(BASE_DIR)/figures $(BUILD_PATH)/; fi
 	pandoc -s -o $(BUILD_PATH)/$(BUILDNAME).tex --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: html
