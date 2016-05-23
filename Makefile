@@ -42,6 +42,8 @@ ifdef ODT_TEMPLATE
   ODT_TEMPLATE:=--reference-docx $(ODT_TEMPLATE)
 endif
 
+PANDOC_OPTIONS:=--toc --smart --bibliography=$(REFS) --csl=csl/$(CSL).csl $(PANDOC_OPTIONS)
+
 # cat := $(if $(filter $(OS),Windows_NT),type,cat)
 # SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) )
 
@@ -67,37 +69,37 @@ all: clean pdf latex html docx odt embed epub post
 
 .PHONY: pdf
 pdf: pre
-	pandoc --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).pdf --csl=csl/$(CSL).csl --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
+	pandoc -o $(BUILD_PATH)/$(BUILDNAME).pdf --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 	@open $(BUILD_PATH)/$(BUILDNAME).pdf
 
 .PHONY: pdfsafemode
 pdfsafemode: pre
-	pandoc --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).pdf --csl=csl/$(CSL).csl $(PANDOC_OPTIONS) $(MKLIST)
+	pandoc -o $(BUILD_PATH)/$(BUILDNAME).pdf $(PANDOC_OPTIONS) $(MKLIST)
 	@open $(BUILD_PATH)/$(BUILDNAME).pdf
 
 
 .PHONY: docx
 docx: pre
-	pandoc -S --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).docx --csl=csl/$(CSL).csl $(DOCX_TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
+	pandoc -o $(BUILD_PATH)/$(BUILDNAME).docx $(DOCX_TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: odt
 odt: pre
-	pandoc -S --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).odt --csl=csl/$(CSL).csl $(ODT_TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
+	pandoc -o $(BUILD_PATH)/$(BUILDNAME).odt $(ODT_TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: latex
 latex: pre
 	cp -r $(BASE_DIR)/figures $(BUILD_PATH)/
-	pandoc --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).tex --csl=csl/$(CSL).csl --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
+	pandoc -o $(BUILD_PATH)/$(BUILDNAME).tex --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: html
 html: pre
-	pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --toc --bibliography=$(REFS) --csl=csl/$(CSL).csl -o $(BUILD_PATH)/$(BUILDNAME).html -t html5 --normalize $(PANDOC_OPTIONS) $(MKLIST)
+	pandoc --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -o $(BUILD_PATH)/$(BUILDNAME).html -t html5 --normalize $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: embed
 embed: pre
-	pandoc -S --reference-links --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs --bibliography=$(REFS) --csl=csl/$(CSL).csl -o $(BUILD_PATH)/embed.html -t html --normalize $(PANDOC_OPTIONS) $(MKLIST)
+	pandoc --reference-links --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -o $(BUILD_PATH)/embed.html -t html --normalize $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: epub
 epub: pre
-	pandoc -S -s --biblatex --toc --bibliography=$(REFS) -o $(BUILD_PATH)/$(BUILDNAME).epub -t epub --normalize $(PANDOC_OPTIONS) $(MKLIST)
+	pandoc -s --biblatex -o $(BUILD_PATH)/$(BUILDNAME).epub -t epub --normalize $(PANDOC_OPTIONS) $(MKLIST)
 
