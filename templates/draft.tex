@@ -1,8 +1,14 @@
 \documentclass[$if(draft)$$draft$,$endif$$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$,$endif$$if(sides)$$sides$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
+$if(xelatexfont)$
+% \usepackage{fontspec}
+\usepackage[MnSymbol]{mathspec}
+\setallmainfonts{$xelatexfont$}
+$else$
 $if(fontfamily)$
 \usepackage{$fontfamily$}
 $else$
-\usepackage{lmodern}
+\usepackage{mathptmx}
+$endif$
 $endif$
 
 % Section/Chapter headings
@@ -25,7 +31,7 @@ $if(geometry)$
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
 \usepackage[unicode=true]{hyperref}
-\usepackage[pdftex,usenames,dvipsnames]{xcolor}
+% \usepackage[pdftex,usenames,dvipsnames]{xcolor}
 \hypersetup{breaklinks=true,
             bookmarks=true,
             pdfauthor={$author$},

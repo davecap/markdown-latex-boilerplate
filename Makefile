@@ -72,6 +72,11 @@ pdf: pre
 	pandoc -o $(BUILD_PATH)/$(BUILDNAME).pdf --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 	@open $(BUILD_PATH)/$(BUILDNAME).pdf
 
+.PHONY: pdfxe
+pdfxe: pre
+	pandoc -o $(BUILD_PATH)/$(BUILDNAME).pdf --latex-engine=xelatex --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
+	@open $(BUILD_PATH)/$(BUILDNAME).pdf
+
 .PHONY: pdfsafemode
 pdfsafemode: pre
 	pandoc -o $(BUILD_PATH)/$(BUILDNAME).pdf $(PANDOC_OPTIONS) $(MKLIST)
