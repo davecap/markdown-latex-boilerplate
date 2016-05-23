@@ -89,11 +89,11 @@ odt: pre
 .PHONY: latex
 latex: pre
 	cp -r $(BASE_DIR)/figures $(BUILD_PATH)/
-	pandoc -o $(BUILD_PATH)/$(BUILDNAME).tex --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
+	pandoc -s -o $(BUILD_PATH)/$(BUILDNAME).tex --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: html
 html: pre
-	pandoc --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -o $(BUILD_PATH)/$(BUILDNAME).html -t html5 --normalize $(PANDOC_OPTIONS) $(MKLIST)
+	pandoc -s --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -o $(BUILD_PATH)/$(BUILDNAME).html -t html5 --normalize $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: embed
 embed: pre
