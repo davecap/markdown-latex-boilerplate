@@ -1,8 +1,9 @@
 \documentclass[$if(draft)$$draft$,$endif$$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$,$endif$$if(sides)$$sides$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
 $if(xelatexfont)$
-% \usepackage{fontspec}
-\usepackage[MnSymbol]{mathspec}
-\setallmainfonts{$xelatexfont$}
+\usepackage{fontspec,xltxtra,xunicode}
+\setmainfont{$xelatexfont$}
+% \usepackage[MnSymbol]{mathspec}
+% \setallmainfonts{$xelatexfont$}
 $else$
 $if(fontfamily)$
 \usepackage{$fontfamily$}
@@ -11,10 +12,13 @@ $else$
 $endif$
 $endif$
 
+% cleveref for figure/table/eqn references
+\usepackage{cleveref}
+
 % Section/Chapter headings
 \usepackage[raggedright]{titlesec}
 % Use the default font for headings
-\titleformat{\chapter}{\bfseries}{Chapter \thechapter}{1.5em}{\large\bfseries}
+\titleformat{\chapter}{\bfseries}{Chapter \thechapter\filright}{1.5em}{\large\bfseries\raggedright}
 \titleformat{\section}[block]{\normalfont\fontsize{12}{18}\bfseries\filcenter}{}{}{}
 \titleformat{\subsection}[block]{\normalfont\fontsize{12}{18}\bfseries\itshape}{}{}{}
 \titleformat{\subsubsection}{\normalfont\fontsize{12}{18}\itshape}{}{}{}
@@ -93,7 +97,7 @@ $if(verbatim-in-note)$
 $endif$
 
 $if(tables)$
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,multirow}
 $endif$
 
 $if(graphics)$
@@ -129,17 +133,19 @@ $endif$
 \providecommand{\tightlist}{%
 \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 
-\renewenvironment{quotation}
+% \expandafter\def\expandafter\quote\expandafter{\quote\singlespacing}
+\renewenvironment{quote}
                {\list{}{\listparindent=0pt%whatever you need
                         \itemindent \listparindent
                         \onehalfspacing
-                        \leftmargin=5em%  whatever you need
-                        \rightmargin=5em%whatever you need
-                        \topsep=0pt%%%%%  whatever you need
-                        \parsep        \z@ \@plus\p@}%
+                        \leftmargin=0.5in%  whatever you need
+                        \rightmargin=0.5in%whatever you need
+                      \topsep=0pt}% whatever you need
+%                         \parsep        \z@ \@plus\p@}%
                 \item\relax}
                {\endlist}
 
+% footnote formatting %
 \usepackage[hang,flushmargin]{footmisc}
 \let\oldfootnotesize\footnotesize
 \renewcommand{\footnotesize}{\normalsize}
@@ -163,13 +169,13 @@ $else$
 $endif$
 
 % Right-to-left reading direction
-$if(dir)$
-  \TeXXeTstate=1
-  \newcommand{\RL}[1]{\beginR #1\endR}
-  \newcommand{\LR}[1]{\beginL #1\endL}
-  \newenvironment{RTL}{\beginR}{\endR}
-  \newenvironment{LTR}{\beginL}{\endL}
-$endif$
+% $if(dir)$
+%   \TeXXeTstate=1
+%   \newcommand{\RL}[1]{\beginR #1\endR}
+%   \newcommand{\LR}[1]{\beginL #1\endL}
+%   \newenvironment{RTL}{\beginR}{\endR}
+%   \newenvironment{LTR}{\beginL}{\endL}
+% $endif$
 
 \pagestyle{headings}
 $if(title)$

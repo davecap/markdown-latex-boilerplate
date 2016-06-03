@@ -42,7 +42,7 @@ ifdef ODT_TEMPLATE
   ODT_TEMPLATE:=--reference-docx $(ODT_TEMPLATE)
 endif
 
-PANDOC_OPTIONS:=--toc --smart --bibliography=$(REFS) --csl=csl/$(CSL).csl $(PANDOC_OPTIONS)
+PANDOC_OPTIONS:=--toc --smart --bibliography=$(REFS) --csl=csl/$(CSL).csl $(PANDOC_OPTIONS) 
 
 # cat := $(if $(filter $(OS),Windows_NT),type,cat)
 # SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) )
@@ -93,7 +93,7 @@ odt: pre
 
 .PHONY: latex
 latex: pre
-	if [ -d "$(BASE_DIR)/figures" ]; then cp -r $(BASE_DIR)/figures $(BUILD_PATH)/; fi
+	if [ -d "$(BASE_DIR)/images" ]; then cp -r $(BASE_DIR)/images $(BUILD_PATH)/; fi
 	pandoc -s -o $(BUILD_PATH)/$(BUILDNAME).tex --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 
 .PHONY: html
