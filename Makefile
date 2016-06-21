@@ -16,23 +16,13 @@ MDCFG?=config.txt
 # Check for environment var for config
 include $(MDCFG)
 
-# set up frontmatter if defined in the config file
-ifdef FRONT_LIST
-  FRONT_MATTER=$(addprefix $(FRONT_DIR)/, $(FRONT_LIST))
-endif
-
-# set up backmatter if defined in the config file
-ifdef BACK_LIST
-  BACK_MATTER=$(addprefix $(BACK_DIR)/, $(BACK_LIST))
-endif
-
 # ideally, SECTIONS is defined by the config file, otherwise build the list
 # ourselves
 ifndef SECTIONS
   SECTIONS=$(addprefix $(SECTIONS_DIR)/, $(SECTIONS_LIST))
 endif
 
-MKLIST=$(METADATA) $(FRONT_MATTER) $(SECTIONS) $(BACK_MATTER)
+MKLIST=$(METADATA) $(SECTIONS)
 
 ifdef DOCX_TEMPLATE
   DOCX_TEMPLATE:=--reference-docx $(DOCX_TEMPLATE)
