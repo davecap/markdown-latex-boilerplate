@@ -1,8 +1,12 @@
 \documentclass[$if(draft)$$draft$,$endif$$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$,$endif$$if(sides)$$sides$,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
 $if(xelatexfont)$
-\usepackage{fontspec,xltxtra,xunicode}
+% \usepackage{fontspec,xltxtra,xunicode}
+\usepackage{fontspec}
+$if(fontpath)$
+\setmainfont[ Path = /Users/kmiyake/GDrive/0_Dissertation/0_WholeThing/fonts/, BoldFont={$boldfont$}, ItalicFont={$italicfont$}, BoldItalicFont={$bifont$} ]{$xelatexfont$}
+$else$
 \setmainfont{$xelatexfont$}
-% \usepackage[MnSymbol]{mathspec}
+$endif$
 % \setallmainfonts{$xelatexfont$}
 $else$
 $if(fontfamily)$
@@ -23,17 +27,26 @@ $endif$
 % \renewcommand{\@tocrmarg}{2.55em plus1fil}
 
 % Section/Chapter headings
-% \usepackage[raggedright]{titlesec}
+\usepackage[raggedright]{titlesec}
 % % Use the default font for headings
 % \titleformat{\chapter}{\bfseries}{\chaptername~\thechapter\filright}{1.5em}{\large\bfseries\raggedright}
-% \titleformat{\section}[block]{\normalfont\fontsize{12}{18}\bfseries\filcenter}{}{}{}
-% \titleformat{\subsection}[block]{\normalfont\fontsize{12}{18}\bfseries\itshape}{}{}{}
-% \titleformat{\subsubsection}{\normalfont\fontsize{12}{18}\itshape}{}{}{}
+\titleformat{\section}[block]{\normalfont\fontsize{12}{18}\bfseries\filcenter}{}{}{}
+\titleformat{\subsection}[block]{\normalfont\fontsize{12}{18}\bfseries\itshape}{}{}{}
+\titleformat{\subsubsection}{\normalfont\fontsize{12}{18}\itshape}{}{}{}
+\makeatletter
+\newcommand{\setappendix}{Appendix~\thechapter:~}
+\newcommand{\setchapter}{\thechapter~}
+\titleformat{\chapter}{\bfseries}{%
+  \ifnum\pdfstrcmp{\@currenvir}{appendices}=0
+    \setappendix
+  \else
+    \setchapter
+  \fi\filright}{1.5em}{\large\bfseries\raggedright}
+\makeatother
 
 \usepackage{etoolbox}
 \usepackage[doublespacing]{setspace}
 $if(geometry)$
-\usepackage{lmodern}
 \usepackage{layouts}
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 $endif$
@@ -80,6 +93,7 @@ $endif$
 \IfFileExists{microtype.sty}{%
 \usepackage{microtype}
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+% \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
 }{}
 $if(lang)$
   \usepackage[shorthands=off,$babel-lang$]{babel}
