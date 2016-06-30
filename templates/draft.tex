@@ -135,7 +135,7 @@ $endif$
 
 % Line spacing %
 \doublespacing
-\setlength{\parindent}{4em}
+\setlength{\parindent}{0.5in}
 \setlength{\parskip}{1em plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 % \renewcommand{\baselinestretch}{2}
@@ -218,6 +218,16 @@ $endfor$
 \pagestyle{fancy}    
 
 \newcounter{savepage}
+
+% \usepackage{ragged2e}
+%
+% \setlength\RaggedRightParindent{0.25in}
+% \RaggedRight
+
+\newlength{\saveparindent}
+\setlength{\saveparindent}{\parindent}
+\raggedright
+\setlength{\parindent}{\saveparindent}
 
 \begin{document}
 
