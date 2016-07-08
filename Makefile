@@ -32,7 +32,7 @@ ifdef ODT_TEMPLATE
   ODT_TEMPLATE:=--reference-docx $(ODT_TEMPLATE)
 endif
 
-PANDOC_OPTIONS:=--toc --smart --bibliography=$(REFS) --csl=csl/$(CSL).csl $(PANDOC_OPTIONS) 
+PANDOC_OPTIONS:=--bibliography=$(REFS) --csl=csl/$(CSL).csl $(PANDOC_OPTIONS) 
 
 # cat := $(if $(filter $(OS),Windows_NT),type,cat)
 # SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) )
