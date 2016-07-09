@@ -9,8 +9,8 @@ TEMPLATE=templates/template.tex
 DOCX_TEMPLATE=
 ODT_TEMPLATE=
 METADATA=metadata.yml
-CSL=chicago-fullnote-bibliography
-PANDOC_OPTIONS=
+CSL=csl/chicago-fullnote-bibliography
+PANDOC_OPTIONS=--latex-engine=xelatex
 MDCFG?=config.txt
 
 # Check for environment var for config
@@ -32,7 +32,13 @@ ifdef ODT_TEMPLATE
   ODT_TEMPLATE:=--reference-docx $(ODT_TEMPLATE)
 endif
 
-PANDOC_OPTIONS:=--bibliography=$(REFS) --csl=csl/$(CSL).csl $(PANDOC_OPTIONS) 
+ifdef REFS
+	PANDOC_OPTIONS:=--bibliography=$(REFS) $(PANDOC_OPTIONS)
+endif
+
+ifdef CSL
+	PANDOC_OPTIONS:=--csl=$(CSL).csl $(PANDOC_OPTIONS)
+endif
 
 # cat := $(if $(filter $(OS),Windows_NT),type,cat)
 # SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) )
@@ -60,11 +66,6 @@ all: clean pdf latex html docx odt embed epub post
 .PHONY: pdf
 pdf: pre
 	pandoc -o $(BUILD_PATH)/$(BUILDNAME).pdf --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
-	@open $(BUILD_PATH)/$(BUILDNAME).pdf
-
-.PHONY: pdfxe
-pdfxe: pre
-	pandoc -o $(BUILD_PATH)/$(BUILDNAME).pdf --latex-engine=xelatex --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(MKLIST)
 	@open $(BUILD_PATH)/$(BUILDNAME).pdf
 
 .PHONY: pdfsafemode
