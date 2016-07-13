@@ -3,11 +3,10 @@ $if(xelatexfont)$
 % \usepackage{fontspec,xltxtra,xunicode}
 \usepackage{fontspec}
 $if(fontpath)$
-\setmainfont[ Path = /Users/kmiyake/GDrive/0_Dissertation/0_WholeThing/fonts/, BoldFont={$boldfont$}, ItalicFont={$italicfont$}, BoldItalicFont={$bifont$} ]{$xelatexfont$}
+\setmainfont[ Path = $fontpath$, BoldFont={$boldfont$}, ItalicFont={$italicfont$}, BoldItalicFont={$bifont$} ]{$xelatexfont$}
 $else$
 \setmainfont{$xelatexfont$}
 $endif$
-% \setallmainfonts{$xelatexfont$}
 $else$
 $if(fontfamily)$
 \usepackage{$fontfamily$}
@@ -47,8 +46,9 @@ $endif$
 \usepackage{etoolbox}
 \usepackage[doublespacing]{setspace}
 $if(geometry)$
-\usepackage{layouts}
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+$else$
+\usepackage[margin=1in,bottom=1in,top=1in,footskip=0.25in,headheight=0.5in]{geometry}
 $endif$
 
 % links %
@@ -219,11 +219,6 @@ $endfor$
 
 \newcounter{savepage}
 
-% \usepackage{ragged2e}
-%
-% \setlength\RaggedRightParindent{0.25in}
-% \RaggedRight
-
 \newlength{\saveparindent}
 \setlength{\saveparindent}{\parindent}
 \raggedright
@@ -233,8 +228,11 @@ $endfor$
 
 % Frontmatter
 \frontmatter
+
+% Title Page
 $if(titlepage)$
 $if(title)$
+\pdfbookmark[0]{Title Page}{titlelabel}
 \begin{titlepage}
 \begin{center}
 \phantom{}\vspace{2in}
@@ -262,7 +260,10 @@ $endif$
 $endif$
 $endif$
 
+% Copyright Page
 $if(copyrightpage)$
+\clearpage\phantomsection
+\pdfbookmark[0]{Copyright Page}{copyrightlabel}
 \phantom{}\vspace{\fill}
 \begin{center}
 \copyright\enspace\number\year\\
@@ -272,8 +273,10 @@ All Rights Reserved\\
 % \makecopyrightpage
 $endif$
 
+% Approval/signature Page
 $if(approvalpage)$
-\newpage
+\clearpage\phantomsection
+\pdfbookmark[0]{Signature Page}{signaturelabel}
 \begin{center}
 \singlespacing
 $if(subtitle)$
@@ -320,15 +323,15 @@ $endif$
 $if(comm5)$
   $comm5$ \\
 $endif$
-
 \vspace{\fill}
 \uppercase{The City University of New York}
 \end{center}
 $endif$
 
+% Abstract
 $if(abstractpage)$
 $if(abstract)$
-\newpage
+\clearpage\phantomsection
 \addcontentsline{toc}{chapter}{Abstract}
 \label{chap:abstract}
 \begin{center}%
@@ -346,14 +349,14 @@ $if(abstract)$
 \vspace{0.25in}
 \noindent Advisor: $chair$
 \vspace{0.25in}
-
 $abstract$
 $endif$
 $endif$
 
-% table of contents, figures, tables
+% table of contents, list of figures, list of tables
 $if(toc)$
-\newpage
+\clearpage
+\pdfbookmark[0]{Table of Contents}{toclabel}
 {\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
 \setcounter{tocdepth}{$toc-depth$}
 \renewcommand{\contentsname}{Table of Contents}
@@ -361,13 +364,13 @@ $if(toc)$
 \tableofcontents}
 $endif$
 $if(lot)$
-\newpage
+\newpage\phantomsection
 \addcontentsline{toc}{chapter}{List of Tables}
 \label{chap:list-of-tables}
 \listoftables
 $endif$
 $if(lof)$
-\newpage
+\newpage\phantomsection
 \addcontentsline{toc}{chapter}{List of Figures}
 \label{chap:list-of-figures}
 \listoffigures
