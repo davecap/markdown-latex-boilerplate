@@ -147,7 +147,12 @@ $if(strikeout)$
 $endif$
 
 % Line spacing %
-\singlespacing
+$if(spacing)$
+  \$spacing$
+$else$
+  \singlespacing
+$endif$
+
 \setlength{\parindent}{0.5in}
 \setlength{\parskip}{1em plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
