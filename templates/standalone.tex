@@ -113,7 +113,7 @@ $if(lang)$
 $endif$
 
 \usepackage[format=hang,justification=raggedright,singlelinecheck=0,labelsep=period]{caption}
-\usepackage[format=hang,justification=raggedright,singlelinecheck=0,labelsep=period]{subcaption}
+% \usepackage[format=hang,justification=raggedright,singlelinecheck=0,labelsep=period]{subcaption}
 $if(listings)$
 \usepackage{listings}
 $endif$
@@ -211,6 +211,16 @@ $else$
 \setcounter{secnumdepth}{0}
 $endif$
 
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
 \pagestyle{headings}
 $if(title)$
 \title{$title$$if(subtitle)$\\\vspace{0.5em}{\large $subtitle$}$endif$}
@@ -223,17 +233,7 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-
-\pagestyle{fancy}    
+\pagestyle{fancy}
 
 \newcounter{savepage}
 
@@ -247,128 +247,35 @@ $endfor$
 % Frontmatter
 % \frontmatter
 %
-% % Title Page
-% $if(titlepage)$
-% $if(title)$
-% \pdfbookmark[0]{Title Page}{titlelabel}
-% \begin{titlepage}
-% \begin{center}
-% \phantom{}\vspace{2in}
-% $if(subtitle)$
-% \uppercase{$title$}:\\
-% \uppercase{$subtitle$}\\[0.5in]
-% $else$
-% \uppercase{$title$}\\[0.5in]
-% $endif$
-% by \\[0.5in]
-% \uppercase{$author$}\par
-% \vspace{\fill}
-% $if(program)$
-% A dissertation submitted to the Graduate Faculty in $program$ in partial fulfillment of the requirements for the degree of Doctor of Philosophy,\\The City University of New York
-% \\[0.25in]
-% \par
-% $endif$
-%
-% \number\year
-%
-% \end{center}
-% \end{titlepage}
-% \setcounter{page}{2}
-% % \maketitle
-% $endif$
-% $endif$
-%
-% % Copyright Page
-% $if(copyrightpage)$
-% \clearpage\phantomsection
-% \pdfbookmark[0]{Copyright Page}{copyrightlabel}
-% \phantom{}\vspace{\fill}
-% \begin{center}
-% \copyright\enspace\number\year\\
-% \uppercase{$author$}\\
-% All Rights Reserved\\
-% \end{center}
-% % \makecopyrightpage
-% $endif$
-%
-% % Approval/signature Page
-% $if(approvalpage)$
-% \clearpage\phantomsection
-% \pdfbookmark[0]{Signature Page}{signaturelabel}
-% \begin{center}
-% \singlespacing
-% $if(subtitle)$
-% $title$:\\
-% $subtitle$\\[1em]
-% $else$
-% $title$\\[1em]
-% $endif$
-% by \\[1em]
-% $author$\par
-% \end{center}
-%
-% \begin{changemargin}{0.5in}{0.5in}
-% \singlespacing
-% \raggedright
-% This manuscript has been read and accepted by the Graduate Faculty in $program$ in satisfaction of the dissertation requirement for the degree of Doctor of Philosophy.
-% \end{changemargin}
-%
-% \vspace{0.75in}
-%
-% \setlength{\tabcolsep}{0pt}
-% \hspace*{-0.5in}
-% \doublespacing
-% \begin{tabular}[t]{p{1.75in}p{1.0in}p{3.5in}}
-% \hrulefill& &\hrulefill \\
-% Date & & $chair$ \newline Chair of Examining Committee\\
-% \\
-% \hrulefill& &\hrulefill \\
-% Date & & $eo$ \newline Executive Officer\\
-% \end{tabular}\\[0.5in]
-%
-% \begin{center}
-% \doublespacing
-% Supervisory Committee \\
-% $if(comm2)$
-%   $comm2$ \\
-% $endif$
-% $if(comm3)$
-%   $comm3$ \\
-% $endif$
-% $if(comm4)$
-%   $comm4$ \\
-% $endif$
-% $if(comm5)$
-%   $comm5$ \\
-% $endif$
-% \vspace{\fill}
-% \uppercase{The City University of New York}
-% \end{center}
-% $endif$
+% Title Page
+$if(title)$
+  % \pdfbookmark[0]{Title Page}{titlelabel}
+  % \begin{titlepage}
+  % \begin{center}
+  \maketitle
+$endif$
 
 % Abstract
-$if(abstractpage)$
 $if(abstract)$
-\clearpage\phantomsection
+$if(abstractpage)$
+% \clearpage\phantomsection
 % \addcontentsline{toc}{chapter}{Abstract}
-\label{chap:abstract}
+% \label{chap:abstract}
+$endif$
 \begin{center}%
   \singlespacing
   ABSTRACT \\[2em]
-  $if(subtitle)$
-  $title$:\\
-  $subtitle$\\[1em]
-  $else$
-  $title$\\[1em]
-  $endif$
-  by \\[1em]
-  $author$ \\[0.25in]
+  % $if(subtitle)$
+  % $title$:\\
+  % $subtitle$\\[1em]
+  % $else$
+  % $title$\\[1em]
+  % $endif$
+  % by \\[1em]
+  % $author$ \\[0.25in]
 \end{center}
 \vspace{0.25in}
-\noindent Advisor: $chair$\\[1em]
-\vspace{0.25in}
 $abstract$
-$endif$
 $endif$
 
 % table of contents, list of figures, list of tables
