@@ -278,29 +278,6 @@ $endif$
 $abstract$
 $endif$
 
-% table of contents, list of figures, list of tables
-% $if(toc)$
-% \clearpage
-% \pdfbookmark[0]{Table of Contents}{toclabel}
-% {\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
-% \setcounter{tocdepth}{$toc-depth$}
-% \renewcommand{\contentsname}{Table of Contents}
-% \singlespacing
-% \tableofcontents}
-% $endif$
-% $if(lot)$
-% \newpage\phantomsection
-% \addcontentsline{toc}{chapter}{List of Tables}
-% \label{chap:list-of-tables}
-% \listoftables
-% $endif$
-% $if(lof)$
-% \newpage\phantomsection
-% \addcontentsline{toc}{chapter}{List of Figures}
-% \label{chap:list-of-figures}
-% \listoffigures
-% $endif$
-
 \setcounter{savepage}{\number\value{page}}
 
 % \mainmatter
@@ -308,7 +285,7 @@ $endif$
 \thispagestyle{plain}
 $body$
 
-%% \backmatter
+% \backmatter
 $for(include-after)$
 $include-after$
 $endfor$
