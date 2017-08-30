@@ -1,0 +1,14 @@
+# vim: set ft=make:
+BASEDIR=./source
+
+METADATA=$(BASEDIR)/dissertation-metadata.yml
+
+BUILDNAME=example
+
+BUILDPATH=./output
+REFS=references.bib
+TEMPLATE=templates/draft.tex
+DOCX_TEMPLATE=templates/draft.docx
+
+CSL=csl/chicago-author-date
+
