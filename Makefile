@@ -20,17 +20,17 @@ SECTIONS := $(shell cat $(SECTIONSFILE) | tr '\n\r' ' ' | tr '\n' ' ' )
 SECTIONS := $(addprefix $(BASEPATH)/, $(SECTIONS))
 
 ifdef DOCX_TEMPLATE
-	PANDOC_OPTIONS := --reference-docx $(DOCX_TEMPLATE)
+	DOCX_TEMPLATE := --reference-docx $(DOCX_TEMPLATE)
 endif
 ifdef ODT_TEMPLATE
-	PANDOC_OPTIONS := --reference-odt $(ODT_TEMPLATE)
+	ODT_TEMPLATE := --reference-odt $(ODT_TEMPLATE)
 endif
 ifdef REFS
 	PANDOC_OPTIONS := --bibliography=$(REFS) $(PANDOC_OPTIONS)
 endif
 
 ifdef CSL
-	PANDOC_OPTIONS := --csl=$(CSL).csl $(PANDOC_OPTIONS)
+	PANDOC_OPTIONS := --csl=$(THISPATH)/csl/$(CSL).csl $(PANDOC_OPTIONS)
 endif
 
 
@@ -48,49 +48,53 @@ post:
 
 .PHONY: clean
 clean:
-	rm -rf $(BUILDPATH)
+	@rm -rf $(BUILDPATH)
 
 .PHONY: all
 all: clean pdf latex html docx odt embed epub post viewpdf viewhtml
 
 .PHONY: pdf
-# Reason for `&&\` : http://stackoverflow.com/questions/1789594/how-to-write-cd-command-in-makefile
-
 pdf: pre
+	cd $(BASEPATH) && \
 	pandoc -o $(BUILDPATH)/$(BUILDNAME).pdf --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(SECTIONS)
-	#@open $(BUILDPATH)/$(BUILDNAME).pdf
 
 .PHONY: pdfsafemode
 pdfsafemode: pre
+	cd $(BASEPATH) && \
 	pandoc -o $(BUILDPATH)/$(BUILDNAME).pdf $(PANDOC_OPTIONS) $(SECTIONS)
-	#@open $(BUILDPATH)/$(BUILDNAME).pdf
 
 .PHONY: docx
 docx: pre
+	cd $(BASEPATH) && \
 	pandoc -o $(BUILDPATH)/$(BUILDNAME).docx $(DOCX_TEMPLATE) $(PANDOC_OPTIONS) $(SECTIONS)
 
 .PHONY: odt
 odt: pre
+	cd $(BASEPATH) && \
 	pandoc -o $(BUILDPATH)/$(BUILDNAME).odt $(ODT_TEMPLATE) $(SECTIONS)
 
 .PHONY: latex
+	cd $(BASEPATH) && \
 	pandoc -o $(BUILDPATH)/$(BUILDNAME).pdf --csl=./csl/$(CSL).csl $(SECTIONS)
-	#open ./build/$(BUILDNAME).pdf
 	
 latex: pre
 	[ -d "$(BASEPATH)/images" ] && ln -s $(BASEPATH)/images $(BUILDPATH)/
+	cd $(BASEPATH) && \
 	pandoc -s -o $(BUILDPATH)/$(BUILDNAME).tex --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(SECTIONS)
 
 .PHONY: html
 html: pre
+	cd $(BASEPATH) && \
 	pandoc -s --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -o $(BUILDPATH)/$(BUILDNAME).html -t html5 $(PANDOC_OPTIONS) $(SECTIONS)
 
 .PHONY: embed
 embed: pre
+	cd $(BASEPATH) && \
 	pandoc --reference-links --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -o $(BUILDPATH)/embed.html -t html5 --normalize $(PANDOC_OPTIONS) $(SECTIONS)
 
 .PHONY: epub
 epub: pre
+	cd $(BASEPATH) && \
 	pandoc -s --biblatex -o $(BUILDPATH)/$(BUILDNAME).epub -t epub $(PANDOC_OPTIONS) $(SECTIONS)
 
 # open files that were rendered

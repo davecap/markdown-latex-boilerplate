@@ -4,7 +4,7 @@ This is part 1. Referenced by [@Fadda:2008p5482].
     
     This is a blockquote
 
-This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph.
+This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph. This is the next paragraph.[^1 This is a footnote with an inline citation @Fadda:2008p5482]
 
 _this text is italics_ and **this text is bold**.
 
