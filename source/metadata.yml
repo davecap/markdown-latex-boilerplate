@@ -1,0 +1,38 @@
+---
+title: 'This is the title'
+subtitle: 'This is my subtitle (after the colon)'
+author: My Full Name
+program: My GC Program
+chair: Name of Dissertation Chair
+eo: Name of Program EO
+comm2: Second committee member
+comm3: Third committee member
+comm4: Fourth committee member
+comm5: Fifth committee member
+comm6: Sixth committee member
+abstract: |
+    This is the abstract.
+    It consists of multiple paragraphs.
+titlepage: true
+copyrightpage: true
+approvalpage: true
+abstractpage: true
+toc: true # include table of contents
+lof: true # include list of figures
+lot: true # include list of tables
+toc-depth: 1 # number of heading levels to include in TOC
+
+# Include additional raw LaTex before or after the body text:
+# include-before-body: frontmatter.tex
+# include-after-body: backmatter.tex
+
+documentclass: book
+draft: final # or draft
+fontsize: 12pt
+xelatexfont: Times New Roman
+papersize: lettersize
+sides: oneside
+geometry: margin=1in, bottom=1in, top=1in, footskip=0.25in, headheight=0.5in
+
+# Do not remove the following set of three dashes
+---
