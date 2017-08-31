@@ -6,6 +6,8 @@ BASEPATH=$(THISPATH)/source
 SECTIONSFILE=_SECTIONS.txt
 BUILDNAME=example
 BUILDPATH=build
+CSL=chicago-author-date
+PANDOC_OPTIONS=--dpi=600 --latex-engine=xelatex --filter pandoc-tablenos --filter pandoc-fignos --filter pandoc-citeproc
 # Optionally pass a different config file location on the command line
 # e.g., $ CFGFILE=myspecialconfig.txt make
 # _CONFIG.txt is the default configuration file
@@ -14,10 +16,12 @@ CFGFILE?=_CONFIG.txt
 # Include the config file
 include $(CFGFILE)
 
+# Load the sections from the SECTIONSFILE if they're not defined in the config file
+ifndef SECTIONS
 # This combines all the filepaths in SECTIONS_FILEPATH file
-SECTIONS := $(shell cat $(SECTIONSFILE) | tr '\n\r' ' ' | tr '\n' ' ' )
-
-SECTIONS := $(addprefix $(BASEPATH)/, $(SECTIONS))
+	SECTIONS := $(shell cat $(SECTIONSFILE) | tr '\n\r' ' ' | tr '\n' ' ' )
+	SECTIONS := $(addprefix $(BASEPATH)/, $(SECTIONS))
+endif
 
 ifdef DOCX_TEMPLATE
 	DOCX_TEMPLATE := --reference-docx $(DOCX_TEMPLATE)
@@ -78,7 +82,7 @@ odt: pre
 	pandoc -o $(BUILDPATH)/$(BUILDNAME).pdf --csl=./csl/$(CSL).csl $(SECTIONS)
 	
 latex: pre
-	[ -d "$(BASEPATH)/images" ] && ln -s $(BASEPATH)/images $(BUILDPATH)/
+	[ -d "$(BASEPATH)/images" ] || ln -s $(BASEPATH)/images $(BUILDPATH)/
 	cd $(BASEPATH) && \
 	pandoc -s -o $(BUILDPATH)/$(BUILDNAME).tex --template=$(TEMPLATE) $(PANDOC_OPTIONS) $(SECTIONS)
 
@@ -99,10 +103,12 @@ epub: pre
 
 # open files that were rendered
 
+.PHONY: viewpdf
 viewpdf:
-		open $(BUILDPATH)/$(BUILDNAME).pdf
+		type xdg-open >/dev/null 2>&1 && xdg-open $(BUILDPATH)/$(BUILDNAME).pdf || open $(BUILDPATH)/$(BUILDNAME).pdf
 
+.PHONY: viewhtml
 viewhtml:
-		open $(BUILDPATH)/$(BUILDNAME).html
+		type xdg-open >/dev/null 2>&1 && xdg-open $(BUILDPATH)/$(BUILDNAME).html || open $(BUILDPATH)/$(BUILDNAME).html
 
 # vim: set ft=make:
