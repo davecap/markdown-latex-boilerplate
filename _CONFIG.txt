@@ -1,14 +1,9 @@
-THISPATH=$(shell pwd)
-BASEPATH=$(THISPATH)/source
-
-# TIMESTAMP=$(shell date "+%Y%m%d-%H%M%S")
-BUILDNAME=example
-
-BUILDPATH=$(THISPATH)/output
-REFS=$(BASEPATH)/references.bib
-TEMPLATE=$(THISPATH)/templates/cuny.tex
-DOCX_TEMPLATE=$(THISPATH)/templates/cuny.docx
-ODT_TEMPLATE=$(THISPATH)/templates/cuny.odt
+BUILDNAME=dissertation
+OUTPUT_FOLDER=output
+REFS=references.bib
+TEMPLATE=cuny
+DOCX_TEMPLATE=
+ODT_TEMPLATE=
 CSL=chicago-author-date
 
 PANDOC_OPTIONS=--dpi=600 --latex-engine=xelatex --filter pandoc-tablenos --filter pandoc-fignos --filter pandoc-citeproc
