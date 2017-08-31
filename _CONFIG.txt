@@ -1,8 +1,8 @@
 THISPATH=$(shell pwd)
 BASEPATH=$(THISPATH)/source
 
-TIMESTAMP=$(shell date "+%Y%m%d-%H%M%S")
-BUILDNAME=example-$(TIMESTAMP)
+# TIMESTAMP=$(shell date "+%Y%m%d-%H%M%S")
+BUILDNAME=example
 
 BUILDPATH=$(THISPATH)/output
 REFS=$(BASEPATH)/references.bib

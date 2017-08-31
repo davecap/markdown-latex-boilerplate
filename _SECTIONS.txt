@@ -1,3 +1,5 @@
 metadata.yml
-example.md
+chapter1.md
+chapter2.md
+appendix_a.md
 references.md

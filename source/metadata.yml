@@ -12,7 +12,10 @@ comm5: Fifth committee member
 comm6: Sixth committee member
 abstract: |
     This is the abstract.
+
     It consists of multiple paragraphs.
+
+    This is the third paragraph.
 titlepage: true
 copyrightpage: true
 approvalpage: true
