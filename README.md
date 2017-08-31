@@ -15,6 +15,8 @@ Use this to write a paper in Markdown and render it using the Pandoc engine.
 
 **QUICKSTART for windows users: double-click on `winmake.bat`**
 
+**NOTE:** The windows batch file hasn't been fully tested, but is based on the previously working version published by David Caplan. Testing and pull requests are welcome.
+
 
 ------------------------------------------------------------------------
 
