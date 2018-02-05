@@ -210,7 +210,7 @@ You are not restricted to using winmake.bat in windows. If you install git for w
 
 For your convenience, a copy of make.exe (As of 25 November 2006) is included. [Being GPLed its source code is also in the website.](http://gnuwin32.sourceforge.net/packages/make.htm).
 
-### Opening Windoww commandline in the right directly quickly
+### Opening Window commandline in the right directory quickly
 
 SHIFT+RIGHT_CLICK on your folder in windows will display an extra entry in the dropdown saying "Open Command Window Here". This will save you lots of time. Or you can make a batch file like `buildpdf.bat` that contains `winmake pdf`.
 
