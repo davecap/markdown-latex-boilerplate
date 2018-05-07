@@ -30,7 +30,7 @@ Use this to write a paper in Markdown and render it using the Pandoc engine.
 
 # Building
 
-## Configering the build system
+## Configuring the build system
 
 Edit the configuration file `_CONFIG.txt`, which contains the following defaults:
 
