@@ -185,6 +185,7 @@ SHIFT+RIGHT_CLICK on your folder in windows will display an extra entry in the d
 # COPYRIGHT
 
 Copyright 2016, 2017 Keith Miyake <keith.miyake@gmail.com>
+
 Copyright 2011-2016 David Caplan
 
 # LICENSE
