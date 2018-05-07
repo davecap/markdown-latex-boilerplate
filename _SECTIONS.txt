@@ -1,3 +1,5 @@
-book.yaml
-example.md
+metadata.yml
+chapter1.md
+chapter2.md
+appendix_a.md
 references.md

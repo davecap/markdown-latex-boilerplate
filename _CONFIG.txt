@@ -1,6 +1,11 @@
-SECTIONS_FILEPATH=_SECTIONS.txt
-BUILDNAME=example
-REFERENCES=references.bib
-TEMPLATE=template.tex
-# TEMPLATE=ut-thesis.tex
-CSL=../elsevier-with-titles
+BUILDNAME=dissertation
+OUTPUT_FOLDER=output
+REFS=references.bib
+TEMPLATE=cuny
+DOCX_TEMPLATE=
+ODT_TEMPLATE=
+CSL=chicago-author-date
+
+PANDOC_OPTIONS=--dpi=600 --latex-engine=xelatex --filter pandoc-tablenos --filter pandoc-fignos --filter pandoc-citeproc
+
+# vim: set ft=make:

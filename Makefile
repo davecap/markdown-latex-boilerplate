@@ -1,66 +1,142 @@
-# Default Config Settings
+# COPYRIGHT
+#
+# Copyright 2016, 2017 Keith Miyake <keith.miyake@gmail.com>
+# Copyright 2011-2016 David Caplan
+#
+# LICENSE
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SECTIONS_FILEPATH=_SECTIONS.txt
-BUILDNAME=example
-REFS=references.bib
-TEMPLATE=template.tex
-# TEMPLATE=ut-thesis.tex
-CSL=elsevier-with-titles
+#
+# Default Configs
+#
+
+THISPATH=$(shell pwd)
+BASEPATH=$(THISPATH)/source
+
+SECTIONSFILE=_SECTIONS.txt
+BUILDNAME=dissertation
+# TIMESTAMP=$(shell date "+%Y%m%d-%H%M%S")
+# BUILDNAME=example-$(TIMESTAMP)
+OUTPUT_FOLDER=output
+CSL=chicago-author-date
+PANDOC_OPTIONS=--dpi=600 --latex-engine=xelatex --filter pandoc-tablenos --filter pandoc-fignos --filter pandoc-citeproc
+# Optionally pass a different config file location on the command line
+# e.g., $ CFGFILE=myspecialconfig.txt make
+# _CONFIG.txt is the default configuration file
+CFGFILE?=_CONFIG.txt
+
+# Include the config file
+include $(CFGFILE)
+
+OUTPUTPATH=$(THISPATH)/$(OUTPUT_FOLDER)/$(BUILDNAME)
+TEMPLATEPATH=$(THISPATH)/templates
+TEMPLATEFILE=$(TEMPLATEPATH)/$(TEMPLATE).tex
+
+# Load the sections from the SECTIONSFILE if they're not defined in the config file
+ifndef SECTIONS
+# This combines all the filepaths in SECTIONSFILE file
+	SECTIONS := $(shell cat $(SECTIONSFILE) | tr '\n\r' ' ' | tr '\n' ' ' )
+	SECTIONS := $(addprefix $(BASEPATH)/, $(SECTIONS))
+endif
+
+ifdef DOCX_TEMPLATE
+	DOCX_TEMPLATE := --reference-docx $(TEMPLATEPATH)/$(DOCX_TEMPLATE).docx
+endif
+ifdef ODT_TEMPLATE
+	ODT_TEMPLATE := --reference-odt $(TEMPLATEPATH)/$(ODT_TEMPLATE).odt
+endif
+ifdef REFS
+	PANDOC_OPTIONS := --bibliography=$(BASEPATH)/$(REFS) $(PANDOC_OPTIONS)
+endif
+
+ifdef CSL
+	PANDOC_OPTIONS := --csl=$(THISPATH)/csl/$(CSL).csl $(PANDOC_OPTIONS)
+endif
 
 
-# Load in new config settings
-include _CONFIG.txt
-#cat := $(if $(filter $(OS),Windows_NT),type,cat)
-#SECTIONS := $(shell $(cat) $(SECTIONS_FILEPATH) | tr '\n' ' ')
-
-# This combines all the filepaths in SECTIONS_FILEPATH file
-SECTIONS := $(shell cat $(SECTIONS_FILEPATH) | tr '\n\r' ' ' | tr '\n' ' ' )
-
-# Perform task
+.DEFAULT_GOAL := pdf
 .PHONY: all clean html pdf epub embed viewpdf viewhtml
 
+.PHONY: pre
 pre:
-	mkdir -p build
+	@echo Using config: $(MDCFG)
+	@mkdir -p $(OUTPUT_FOLDER)
 
+.PHONY: post
 post:
-	@echo POST
+	@echo "Finished compiling all targets"
 
+.PHONY: clean
 clean:
-	rm -rf build
+	@rm -rf $(OUTPUT_FOLDER)
 
-# Reason for `&&\` : http://stackoverflow.com/questions/1789594/how-to-write-cd-command-in-makefile
+.PHONY: all
+all: clean pdf latex html docx odt embed epub post viewpdf viewhtml
 
+.PHONY: pdf
 pdf: pre
-		cd ./source/ && \
-		pandoc --toc -N --bibliography=$(REFERENCES) -o ../build/$(BUILDNAME).pdf --csl=../csl/$(CSL).csl --template=../$(TEMPLATE) $(SECTIONS)
+	cd $(BASEPATH) && \
+	pandoc -o $(OUTPUTPATH).pdf --template=$(TEMPLATEFILE) $(PANDOC_OPTIONS) $(SECTIONS)
 
+.PHONY: pdfsafemode
 pdfsafemode: pre
-		cd ./source/ && \
-		pandoc --toc -N --bibliography=$(REFERENCES) -o ../build/$(BUILDNAME).pdf --csl=../csl/$(CSL).csl $(SECTIONS)
+	cd $(BASEPATH) && \
+	pandoc -o $(OUTPUTPATH).pdf $(PANDOC_OPTIONS) $(SECTIONS)
 
+.PHONY: docx
+docx: pre
+	cd $(BASEPATH) && \
+	pandoc -o $(OUTPUTPATH).docx $(DOCX_TEMPLATE) $(PANDOC_OPTIONS) $(SECTIONS)
+
+.PHONY: odt
+odt: pre
+	cd $(BASEPATH) && \
+	pandoc -o $(OUTPUTPATH).odt $(ODT_TEMPLATE) $(SECTIONS)
+
+.PHONY: latex
+	cd $(BASEPATH) && \
+	pandoc -o $(OUTPUTPATH).pdf --csl=./csl/$(CSL).csl $(SECTIONS)
+	
 latex: pre
-	  ln -s ../figures ./build/
-		cd ./source/ && \
-		pandoc --toc -N --bibliography=$(REFERENCES) -o ../build/$(BUILDNAME).tex --csl=../csl/$(CSL).csl --template=$(TEMPLATE) $(SECTIONS)
+	[ -d "$(BASEPATH)/images" ] || ln -s $(BASEPATH)/images $(OUTPUT_FOLDER)/
+	cd $(BASEPATH) && \
+	pandoc -s -o $(OUTPUTPATH).tex --template=$(TEMPLATEFILE) $(PANDOC_OPTIONS) $(SECTIONS)
 
+.PHONY: html
 html: pre
-		cd ./source/ && \
-		pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=$(REFS) -o ../build/$(BUILDNAME).html -t html --normalize $(SECTIONS)
+	cd $(BASEPATH) && \
+	pandoc -s --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -o $(OUTPUTPATH).html -t html5 $(PANDOC_OPTIONS) $(SECTIONS)
 
+.PHONY: embed
 embed: pre
-		cd ./source/ && \
-		pandoc -S --reference-links --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -N --bibliography=$(REFS) --csl=../csl/$(CSL).csl -o ../build/$(BUILDNAME).html -t html --normalize $(SECTIONS)
+	cd $(BASEPATH) && \
+	pandoc --reference-links --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -o $(OUTPUT_FOLDER)/embed.html -t html5 --normalize $(PANDOC_OPTIONS) $(SECTIONS)
 
+.PHONY: epub
 epub: pre
-		cd ./source/ && \
-		pandoc -S -s --biblatex --toc -N --bibliography=$(REFS) -o ../build/$(BUILDNAME).epub -t epub --normalize $(SECTIONS)
+	cd $(BASEPATH) && \
+	pandoc -s --biblatex -o $(OUTPUTPATH).epub -t epub $(PANDOC_OPTIONS) $(SECTIONS)
 
 # open files that were rendered
 
+.PHONY: viewpdf
 viewpdf:
-		open ./build/$(BUILDNAME).pdf
+		type xdg-open >/dev/null 2>&1 && xdg-open $(OUTPUTPATH).pdf || open $(OUTPUTPATH).pdf
 
+.PHONY: viewhtml
 viewhtml:
-		open ./build/$(BUILDNAME).html
+		type xdg-open >/dev/null 2>&1 && xdg-open $(OUTPUTPATH).html || open $(OUTPUTPATH).html
 
-default: pdf
+# vim: set ft=make:

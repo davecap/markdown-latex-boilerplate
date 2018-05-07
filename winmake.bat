@@ -7,6 +7,7 @@ ECHO # Windows Makefile alternative for markdown-latex-boilerplate
 ECHO =============================================================
 ECHO.
 ECHO Readme located in:
+ECHO  * https://github.com/kaymmm/markdown-latex-boilerplate
 ECHO  * https://github.com/mofosyne/markdown-latex-boilerplate
 ECHO  * https://github.com/davecap/markdown-latex-boilerplate
 ECHO.
@@ -19,10 +20,11 @@ SET COMMAND=%1%
 
 
 REM Default config Here:
-SET SECTIONS_FILEPATH=_SECTIONS.txt
-SET BUILDNAME=example
+SET SECTIONSFILE=_SECTIONS.txt
+SET BUILDNAME=dissertation
+SET OUTPUT_FOLDER=output
 SET REFERENCES=references.bib
-SET TEMPLATE=template.tex
+SET TEMPLATE=cuny.tex
 SET CSL=elsevier-with-titles
 
 REM Set CR+LF as the newline https://en.wikipedia.org/wiki/Newline#Conversion_utilities
@@ -37,20 +39,22 @@ DEL _CONFIG.temp.txt
 REM Remove all newlines in SECTIONS
 setlocal enabledelayedexpansion
 set SECTIONS=
-for /f %%i In (%SECTIONS_FILEPATH%) DO set SECTIONS=!SECTIONS! %%i
+for /f %%i In (%SECTIONSFILE%) DO set SECTIONS=!SECTIONS! %%i
 ECHO Sections Detected: %SECTIONS%
 
 REM Load CSL
 SET CSL_SET=--csl=../csl/%CSL%.csl
 IF "%CSL%"=="" SET CSL_SET=
 
+REM Setup variables
+SET OUTPUTPATH=%OUTPUT_FOLDER%/%BUILDNAME%
 
 
 REM process user intention
 IF "%COMMAND%"=="clean" goto cleanOnly
 
 :pre
-mkdir build
+mkdir %OUTPUT_FOLDER%
 
 REM ECHO Menu settings here
 :choices
@@ -77,56 +81,56 @@ goto choices
 ECHO.
 ECHO # HELP:
 ECHO  *  winmake clean : Removes the build folder
-ECHO  *  winmake pdf   : Builds a pdf file to ./build/ folder. Requires LaTeX.
+ECHO  *  winmake pdf   : Builds a pdf file to ./%OUTPUT_FOLDER%/ folder. Requires LaTeX.
 ECHO  *  winmake pdf-safemode : Same as pdf but ignores template and CSL settings.
-ECHO  *  winmake epub  : Builds a epub file to ./build/ folder
-ECHO  *  winmake html  : Builds a html file to ./build/ folder
-ECHO  *  winmake html  : Builds a standalone html file with embedded images to ./build/ folder
+ECHO  *  winmake epub  : Builds a epub file to ./%OUTPUT_FOLDER%/ folder
+ECHO  *  winmake html  : Builds a html file to ./%OUTPUT_FOLDER%/ folder
+ECHO  *  winmake html  : Builds a standalone html file with embedded images to ./%OUTPUT_FOLDER%/ folder
 ECHO  *  winmake       : Opens up a prompt.
 ECHO.
 goto exit
 
 :cleanOnly
 ECHO cleans build folder
-rmdir build /S /q
-mkdir build
+rmdir %OUTPUT_FOLDER% /S /q
+mkdir %OUTPUT_FOLDER%
 goto exit
 
 :pdf
 ECHO ## PDF MODE
 REM If something goes wrong as in "Undefined control sequence". It usually imply that there is something wrong with the latex template. Use safemode
 cd source
-pandoc --toc -N --bibliography=./%REFERENCES% -o ../build/%BUILDNAME%.pdf %CSL_SET% --template=../%TEMPLATE% %SECTIONS%
-start ../build/%BUILDNAME%.pdf
+pandoc %PANDOC_OPTIONS% --bibliography=./%REFERENCES% -o ../%OUTPUTPATH%.pdf %CSL_SET% --template=../%TEMPLATE% %SECTIONS%
+start ../%OUTPUTPATH%.pdf
 goto exit_nopause
 
 :pdfsafemode
 ECHO ## PDF SAFEMODE
 REM Same as pdf mode, but without the template. Also removed CSL since people may forget to download a CSL sheet.
 cd source
-pandoc --toc -N --bibliography=./%REFERENCES% -o ../build/%BUILDNAME%.pdf %SECTIONS%
-start ../build/%BUILDNAME%.pdf
+pandoc --toc -N --bibliography=./%REFERENCES% -o ../%OUTPUTPATH%.pdf %SECTIONS%
+start ../%OUTPUTPATH%.pdf
 goto exit
 
 :epub
 ECHO ## EPUB MODE
 cd source
-pandoc -S -s --biblatex --toc -N --bibliography=./%REFERENCES% -o ../build/%BUILDNAME%.epub -t epub --normalize %SECTIONS%
-start ../build/%BUILDNAME%.epub
+pandoc -S -s --biblatex --toc -N --bibliography=./%REFERENCES% -o ../%OUTPUTPATH%.epub -t epub --normalize %SECTIONS%
+start ../%OUTPUTPATH%.epub
 goto exit_nopause
 
 :html
 ECHO ## HTML MODE
 cd source
-pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=./%REFERENCES% -o ../build/%BUILDNAME%.html -t html --normalize %SECTIONS%
-start ../build/%BUILDNAME%.html
+pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=./%REFERENCES% -o ../%OUTPUTPATH%.html -t html --normalize %SECTIONS%
+start ../%OUTPUTPATH%.html
 goto exit_nopause
 
 :htmlstandalone
 ECHO ## HTML MODE
 cd source
-pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=./%REFERENCES% -o ../build/%BUILDNAME%.html -t html --self-contained --normalize %SECTIONS%
-start ../build/%BUILDNAME%.html
+pandoc -S --mathjax="http://cdn.mathjax.org/mathjax/latest/MathJax.js" --section-divs -s --biblatex --toc -N --bibliography=./%REFERENCES% -o ../%OUTPUTPATH%.html -t html --self-contained --normalize %SECTIONS%
+start ../%OUTPUTPATH%.html
 goto exit_nopause
 
 :exit
